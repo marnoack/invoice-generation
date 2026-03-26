@@ -156,16 +156,16 @@ if not df.empty:
                 own_cost = calculate_variable_cost(own_consumption_m3)
                 common_cost = calculate_variable_cost(common_allocation_m3)
 
+                # 5. Fixed Fee divided by coefficient
+                individual_fixed_fee = TOTAL_FIXED_FEE_BUILDING * coef
+                
                 # Apply tax to the common cost as requested (18%)
-                common_cost_with_tax = common_cost * (1 + TAX_RATE)
+                common_cost_with_tax = common_cost * (1 + TAX_RATE) +  individual_fixed_fee * (1 + TAX_RATE)
                 
                 water_component = total_billing_m3 * WATER_RATE
                 sewage_component = total_billing_m3 * SEWAGE_RATE
                 variable_cost = water_component + sewage_component
 
-                # 5. Fixed Fee divided by coefficient
-                individual_fixed_fee = (TOTAL_FIXED_FEE_BUILDING * coef) * (1 + TAX_RATE)
-                
                 # 6. Budget for the month
                 monthly_budget = BUDGETS.get(selected_period, 0.0)
                 

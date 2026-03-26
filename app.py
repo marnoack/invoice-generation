@@ -193,14 +193,13 @@ if not df.empty:
                     {owners_html}
                     <p><strong>Coeficiente de Participación:</strong> {coef*100:.2f}%</p>
                     <hr>
+                    
                     <table style="width: 100%; border-collapse: collapse;">
                         <tr><td>Presupuesto total del mes:</td><td style="text-align: right;">S/. {monthly_budget:.2f}</td></tr>
                         <tr><td colspan="2">Conceptos de su Cuota del mes de {selected_period}</td></tr>
                         <tr><td>Cuota de mantenimiento:</td><td style="text-align: right;">S/. {maintenance_fee:.2f}</td></tr>    
-                        
                         <tr><td>Cuota de Consumo de Agua Propio:</td><td style="text-align: right;">S/. {own_cost:.2f}</td></tr>
-                        <tr><td>Cuota Áreas Comunes:</td><td style="text-align: right;">S/. {common_cost:.2f}</td></tr>
-                       
+                        <tr><td>Cuota Áreas Comunes:</td><td style="text-align: right;">S/. {common_cost:.2f}</td></tr> 
                         <tr style="font-weight: bold; border-top: 1px solid #ccc;"><td>Consumo Total Facturable:</td><td style="text-align: right;">{total_billing_m3:.2f} m³</td></tr>
                     </table>
                     <br>

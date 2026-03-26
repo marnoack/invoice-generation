@@ -191,7 +191,7 @@ if not df.empty:
 
                 # Create the HTML content for printing
                 owners_html = "".join([f"<p style='margin:0; padding-left:100px;'>{name}</p>" for name in owner_list[1:]])
-                receipt_html = f"""
+                                receipt_html = f"""
                 <div id="receipt-content" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
                     <h2 style="text-align: center; color: #1f4e79;">RECIBO DE AGUA - LA FLORESTA 255</h2>
                     <hr>
@@ -204,18 +204,19 @@ if not df.empty:
                         <tr><td>Presupuesto total del mes:</td><td style="text-align: right;">S/. {monthly_budget:.2f}</td></tr>
                         <tr><td colspan="2" style="padding-top:10px;"><strong>Conceptos de su Cuota del mes de {selected_period}</strong></td></tr>
                         <tr><td>Cuota de mantenimiento:</td><td style="text-align: right;">S/. {maintenance_fee:.2f}</td></tr>
-                        <tr><td>Cuota de Consumo de Agua Propio:</td><td style="text-align: right;">S/. {own_cost:.2f}</td></tr>
-                        <tr><td>Cuota Áreas Comunes (inc. IGV):</td><td style="text-align: right;">S/. {common_cost_with_tax:.2f}</td></tr>
+                        <tr><td>Cuota de Consumo de Agua Propio:</td><td style="text-align: right;">S/. {own_cost_net:.2f}</td></tr>
+                        <tr><td>Cuota Áreas Comunes y Fijo (inc. IGV):</td><td style="text-align: right;">S/. {common_cost_with_tax:.2f}</td></tr>
                     </table>
                     <br>
                     <table style="width: 100%; border-collapse: collapse;">
-                        <tr style="font-weight: bold; border-bottom: 1px solid #ccc;"><td>Consumo Total Facturable:</td><td style="text-align: right;">{total_billing_m3:.2f} m³</td></tr>
-                        <tr><td>Costo Agua ({WATER_RATE:.4f}/m³):</td><td style="text-align: right;">S/. {water_component:.2f}</td></tr>
-                        <tr><td>Costo Alcantarillado ({SEWAGE_RATE:.4f}/m³):</td><td style="text-align: right;">S/. {sewage_component:.2f}</td></tr>
-                        <tr><td>Cargo Fijo Proporcional:</td><td style="text-align: right;">S/. {individual_fixed_fee:.2f}</td></tr>
-                        <tr><td>Subtotal Neto:</td><td style="text-align: right;">S/. {subtotal_neto:.2f}</td></tr>
-                        <tr><td>IGV ({TAX_RATE*100:.0f}%):</td><td style="text-align: right;">S/. {tax_amount:.2f}</td></tr>
-                        <tr style="font-weight: bold; font-size: 1.2em; border-top: 2px solid #000;"><td>TOTAL A PAGAR:</td><td style="text-align: right;">S/. {total_to_pay:.2f}</td></tr>
+                        <tr style="font-weight: bold; border-bottom: 1px dotted #ccc;">
+                            <td style="padding: 10px 0;">Consumo Total Facturable:</td>
+                            <td style="text-align: right; padding: 10px 0;">{total_billing_m3:.2f} m³</td>
+                        </tr>
+                        <tr style="font-weight: bold; font-size: 1.2em; border-top: 2px solid #000;">
+                            <td style="padding-top: 15px;">TOTAL A PAGAR:</td>
+                            <td style="text-align: right; padding-top: 15px;">S/. {total_to_pay:.2f}</td>
+                        </tr>
                     </table>
                 </div>
                 """

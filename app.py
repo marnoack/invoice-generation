@@ -192,8 +192,7 @@ if not df.empty:
                     <p><strong>Propietario(s):</strong> {owner_list[0]}</p>
                     {owners_html}
                     <p><strong>Coeficiente de Participación:</strong> {coef*100:.2f}%</p>
-                    <hr>
-                    
+                    <hr> 
                     <table style="width: 100%; border-collapse: collapse;">
                         <tr><td>Presupuesto total del mes:</td><td style="text-align: right;">S/. {monthly_budget:.2f}</td></tr>
                         <tr><td colspan="2">Conceptos de su Cuota del mes de {selected_period}</td></tr>

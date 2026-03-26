@@ -1,6 +1,13 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
+from datetime import datetime, timedelta
+
+# --- DATE CALCULATION ---
+# Get current date and add 10 days for the due date
+current_date = datetime.now()
+due_date = current_date + timedelta(days=10)
+due_date_str = due_date.strftime("%d/%m/%Y")
 
 # --- CONFIGURATION ---
 # Fixed Rates (per m3)
@@ -219,8 +226,12 @@ if not df.empty:
                             <td style="text-align: right; padding: 10px 0;">{total_billing_m3:.2f} m³</td>
                         </tr>
                         <tr style="font-weight: bold; font-size: 1.2em; border-top: 2px solid #000;">
-                            <td style="padding-top: 15px;">TOTAL A PAGAR:</td>
+                            <td style="padding-top: 15px;">CUOTA TOTAL DE MES:</td>
                             <td style="text-align: right; padding-top: 15px;">S/. {total_to_pay:.2f}</td>
+                        </tr>
+                         <tr style="font-weight: bold; font-size: 1.2em; border-top: 2px solid #000;">
+                            <td style="padding-top: 15px;">FECHA DE VENCIMIENTO</td>
+                            <td style="text-align: right; padding-top: 15px;">{due_date_str}</td>
                         </tr>
                     </table>
                     <br>

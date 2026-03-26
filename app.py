@@ -225,17 +225,17 @@ if not df.empty:
                             <td style="padding: 10px 0;">Consumo Total Facturable:</td>
                             <td style="text-align: right; padding: 10px 0;">{total_billing_m3:.2f} m³</td>
                         </tr>
-                        <tr style="font-weight: bold; font-size: 1.2em; border-top: 2px solid #000;">
-                            <td style="padding-top: 15px;">CUOTA TOTAL DE MES:</td>
-                            <td style="text-align: right; padding-top: 15px;">S/. {total_to_pay:.2f}</td>
+                        <tr style="font-weight: bold; font-size: 1.0 em; border-top: 1px solid #000;">
+                            <td style="padding-top: 5px;">CUOTA TOTAL DE MES:</td>
+                            <td style="text-align: right; padding-top: 5px;">S/. {total_to_pay:.2f}</td>
                         </tr>
-                         <tr style="font-weight: bold; font-size: 1.2em; border-top: 2px solid #000;">
-                            <td style="padding-top: 15px;">FECHA DE VENCIMIENTO</td>
-                            <td style="text-align: right; padding-top: 15px;">{due_date_str}</td>
+                         <tr style="font-weight: bold; font-size: 1.0 em; border-top: 1px solid #000;">
+                            <td style="padding-top: 5px;">FECHA DE VENCIMIENTO</td>
+                            <td style="text-align: right; padding-top: 5px;">{due_date_str}</td>
                         </tr>
                     </table>
                     <br>
-                    <div style="display: flex; gap: 20px;">
+                    <div style="display: flex; gap: 0px;">
                         <div style="flex: 1;">
                             <table style="width: 100%; border: 1px solid #ccc; border-collapse: collapse; font-size: 0.9em;">
                                 <tr style="background-color: #f2f2f2; font-weight: bold;">

@@ -213,11 +213,11 @@ if not df.empty:
                     <hr>
                     <table>
                         <tr class="bg-black">
-                            <td class="p-5">PRESUPUESTO TOTAL DEL MES:</td>
+                            <td>PRESUPUESTO TOTAL DEL MES:</td>
                             <td class="text-right p-5">S/. {monthly_budget:.2f}</td>
                         </tr>
                         <tr class="bg-black">
-                            <td colspan="2" style="padding: 10px 5px 5px 5px;"><strong>CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</strong></td>
+                            <td colspan="2">CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</td>
                         </tr>
                         <tr><td class="p-5 border-b">Cuota de mantenimiento:</td><td class="text-right p-5 border-b">S/. {maintenance_fee:.2f}</td></tr>
                         <tr><td class="p-5 border-b">Cuota de Consumo de Agua Propio:</td><td class="text-right p-5 border-b">S/. {own_cost:.2f}</td></tr>
@@ -238,7 +238,7 @@ if not df.empty:
                     <div style="display: flex; gap: 10px;">
                         <div style="flex: 1;">
                             <table class="border-all" style="font-size: 0.85em;">
-                                <tr class="bg-blue" style="font-weight: bold;">
+                                <tr class="bg-black" style="font-weight: bold;">
                                     <td colspan="2" style="padding: 5px; text-align: center;">Consumo de Agua, Metros Cúbicos</td>
                                 </tr>
                                 <tr><td class="p-5 border-all">Lectura Contometro (Anterior)</td><td class="p-5 border-all text-right">{lectura_anterior:.0f}</td></tr>

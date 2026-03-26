@@ -144,8 +144,13 @@ if not df.empty:
         if not filtered_df.empty:
             try:
                 # 1. Individual Consumption
-                raw_consumption = float(filtered_df.iloc[0]['Consumo'])
-                own_consumption_m3 = raw_consumption / 100.0
+                raw_row = filtered_df.iloc[0]
+                own_consumption_m3 = float(raw_row['Consumo']) / 100.0
+                lectura_anterior = float(raw_row['Lectura Anterior'])
+                lectura_actual = float(raw_row['Lectura Actual'])
+            
+                #raw_consumption = float(filtered_df.iloc[0]['Consumo'])
+                #own_consumption_m3 = raw_consumption / 100.0
                 
                 # 2. Common Area Allocation
                 coef = COEFFICIENTS.get(selected_dept, 0.05) # Default to 5% if not found
@@ -204,7 +209,7 @@ if not df.empty:
                         <tr><td>Presupuesto total del mes:</td><td style="text-align: right;">S/. {monthly_budget:.2f}</td></tr>
                         <tr><td colspan="2" style="padding-top:10px;"><strong>Conceptos de su Cuota del mes de {selected_period}</strong></td></tr>
                         <tr><td>Cuota de mantenimiento:</td><td style="text-align: right;">S/. {maintenance_fee:.2f}</td></tr>
-                        <tr><td>Cuota de Consumo de Agua Propio:</td><td style="text-align: right;">S/. {own_cost:.2f}</td></tr>
+                        <tr><td>Cuota de Consumo de Agua Propio:</td><td style="text-align: right;">S/. {own_cost_net:.2f}</td></tr>
                         <tr><td>Cuota Áreas Comunes y Fijo (inc. IGV):</td><td style="text-align: right;">S/. {common_cost_with_tax:.2f}</td></tr>
                     </table>
                     <br>
@@ -218,9 +223,29 @@ if not df.empty:
                             <td style="text-align: right; padding-top: 15px;">S/. {total_to_pay:.2f}</td>
                         </tr>
                     </table>
+                    <br>
+                    <div style="display: flex; gap: 20px;">
+                        <div style="flex: 1;">
+                            <table style="width: 100%; border: 1px solid #ccc; border-collapse: collapse; font-size: 0.9em;">
+                                <tr style="background-color: #f2f2f2; font-weight: bold;">
+                                    <td colspan="2" style="padding: 5px; border: 1px solid #ccc; text-align: center;">Consumo de Agua, Metros Cúbicos</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 5px; border: 1px solid #ccc;">Lectura Contometro (Anterior)</td>
+                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">{lectura_anterior:.0f}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 5px; border: 1px solid #ccc;">Lectura Contometro (Actual)</td>
+                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">{lectura_actual:.0f}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="flex: 1;">
+                            <!-- Espacio para futura información o columna vacía -->
+                        </div>
+                    </div>
                 </div>
-                """
-
+                """  
                 with st.expander("Ver detalle del cálculo (Consumo + Comunes + IGV)", expanded=True):
                     st.markdown(receipt_html, unsafe_allow_html=True)
                     

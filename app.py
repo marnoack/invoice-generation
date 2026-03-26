@@ -238,6 +238,18 @@ if not df.empty:
                                     <td style="padding: 5px; border: 1px solid #ccc;">Lectura Contometro (Actual)</td>
                                     <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">{lectura_actual:.0f}</td>
                                 </tr>
+                                <tr>
+                                    <td style="padding: 5px; border: 1px solid #ccc;">Consumo Dpto.</td>
+                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">{own_consumption_m3:.2f}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 5px; border: 1px solid #ccc;">Consumo Común</td>
+                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">{common_allocation_m3:.2f}</td>
+                                </tr>
+                                <tr style="font-weight: bold; background-color: #f9f9f9;">
+                                    <td style="padding: 5px; border: 1px solid #ccc;">Consumo Total, m3</td>
+                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">{own_consumption_m3 + common_allocation_m3:.2f}</td>
+                                </tr>
                             </table>
                         </div>
                         <div style="flex: 1;">
@@ -245,7 +257,8 @@ if not df.empty:
                         </div>
                     </div>
                 </div>
-                """  
+                """
+            
                 with st.expander("Ver detalle del cálculo (Consumo + Comunes + IGV)", expanded=True):
                     st.markdown(receipt_html, unsafe_allow_html=True)
                     

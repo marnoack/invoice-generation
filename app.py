@@ -209,7 +209,7 @@ if not df.empty:
                         <tr><td>Presupuesto total del mes:</td><td style="text-align: right;">S/. {monthly_budget:.2f}</td></tr>
                         <tr><td colspan="2" style="padding-top:10px;"><strong>Conceptos de su Cuota del mes de {selected_period}</strong></td></tr>
                         <tr><td>Cuota de mantenimiento:</td><td style="text-align: right;">S/. {maintenance_fee:.2f}</td></tr>
-                        <tr><td>Cuota de Consumo de Agua Propio:</td><td style="text-align: right;">S/. {own_cost_net:.2f}</td></tr>
+                        <tr><td>Cuota de Consumo de Agua Propio:</td><td style="text-align: right;">S/. {own_cost:.2f}</td></tr>
                         <tr><td>Cuota Áreas Comunes y Fijo (inc. IGV):</td><td style="text-align: right;">S/. {common_cost_with_tax:.2f}</td></tr>
                     </table>
                     <br>

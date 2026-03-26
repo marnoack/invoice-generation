@@ -153,6 +153,9 @@ if not df.empty:
                 total_billing_m3 = own_consumption_m3 + common_allocation_m3
                 
                 # 4. Costs
+                own_cost = calculate_variable_cost(own_consumption_m3)
+                common_cost = calculate_variable_cost(common_allocation_m3)
+                
                 water_component = total_billing_m3 * WATER_RATE
                 sewage_component = total_billing_m3 * SEWAGE_RATE
                 variable_cost = water_component + sewage_component
@@ -193,9 +196,11 @@ if not df.empty:
                     <table style="width: 100%; border-collapse: collapse;">
                         <tr><td>Presupuesto total del mes:</td><td style="text-align: right;">S/. {monthly_budget:.2f}</td></tr>
                         <tr><td colspan="2">Conceptos de su Cuota del mes de {selected_period}</td></tr>
-                        <tr><td>Cuota de mantenimiento:</td><td style="text-align: right;">S/. {maintenance_fee:.2f}</td></tr>
-                        <tr><td>Consumo Propio:</td><td style="text-align: right;">{own_consumption_m3:.2f} m³</td></tr>
-                        <tr><td>Cuota Áreas Comunes:</td><td style="text-align: right;">{common_allocation_m3:.2f} m³</td></tr>
+                        <tr><td>Cuota de mantenimiento:</td><td style="text-align: right;">S/. {maintenance_fee:.2f}</td></tr>    
+                        
+                        <tr><td>Cuota de Consumo de Agua Propio:</td><td style="text-align: right;">S/. {own_cost:.2f}</td></tr>
+                        <tr><td>Cuota Áreas Comunes:</td><td style="text-align: right;">S/. {common_cost:.2f}</td></tr>
+                       
                         <tr style="font-weight: bold; border-top: 1px solid #ccc;"><td>Consumo Total Facturable:</td><td style="text-align: right;">{total_billing_m3:.2f} m³</td></tr>
                     </table>
                     <br>

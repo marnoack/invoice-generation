@@ -146,10 +146,18 @@ if not df.empty:
                 receipt_html = f"""
                 <div id="receipt-content" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: white;">
                     <style>
+                        /* Forzar colores en la vista previa y en la impresión */
+                        #receipt-content {{ 
+                            -webkit-print-color-adjust: exact !important; 
+                            print-color-adjust: exact !important; 
+                        }}
+                        .bg-blue {{ background-color: #00008b !important; color: white !important; }}
+                        .bg-yellow {{ background-color: #ffb300 !important; color: black !important; }}
+                        .bg-gray {{ background-color: #f2f2f2 !important; }}
+                        
                         @media print {{
                             #receipt-content {{ border: none !important; }}
-                            tr {{ -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }}
-                            td {{ -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }}
+                            tr, td {{ -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }}
                         }}
                     </style>
                     <h2 style="text-align: center; color: #1f4e79; margin-bottom: 5px;">RECIBO DE AGUA - LA FLORESTA 255</h2>
@@ -160,11 +168,11 @@ if not df.empty:
                     <p><strong>Coeficiente de Participación:</strong> {coef*100:.2f}%</p>
                     <hr>
                     <table style="width: 100%; border-collapse: collapse;">
-                        <tr style="background-color: #00008b !important; color: white !important;">
+                        <tr class="bg-blue">
                             <td style="padding: 5px;">PRESUPUESTO TOTAL DEL MES:</td>
                             <td style="text-align: right; padding: 5px;">S/. {monthly_budget:.2f}</td>
                         </tr>
-                        <tr style="background-color: #00008b !important; color: white !important;">
+                        <tr class="bg-blue">
                             <td colspan="2" style="padding: 10px 5px 5px 5px;"><strong>CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</strong></td>
                         </tr>
                         <tr><td style="padding: 5px; border-bottom: 1px solid #eee;">Cuota de mantenimiento:</td><td style="text-align: right; padding: 5px; border-bottom: 1px solid #eee;">S/. {maintenance_fee:.2f}</td></tr>
@@ -173,11 +181,11 @@ if not df.empty:
                     </table>
                     <br>
                     <table style="width: 100%; border-collapse: collapse;">
-                        <tr style="background-color: #00008b !important; color: white !important; font-weight: bold;">
+                        <tr class="bg-blue" style="font-weight: bold;">
                             <td style="padding: 8px;">CUOTA TOTAL DE MES:</td>
                             <td style="text-align: right; padding: 8px;">S/. {total_to_pay:.2f}</td>
                         </tr>
-                        <tr style="background-color: #ffb300 !important; color: black !important; font-weight: bold;">
+                        <tr class="bg-yellow" style="font-weight: bold;">
                             <td style="padding: 8px;">FECHA DE VENCIMIENTO</td>
                             <td style="text-align: right; padding: 8px;">{due_date_str}</td>
                         </tr>
@@ -186,7 +194,7 @@ if not df.empty:
                     <div style="display: flex; gap: 10px;">
                         <div style="flex: 1;">
                             <table style="width: 100%; border: 1px solid #ccc; border-collapse: collapse; font-size: 0.85em;">
-                                <tr style="background-color: #00008b !important; color: white !important; font-weight: bold;">
+                                <tr class="bg-blue" style="font-weight: bold;">
                                     <td colspan="2" style="padding: 5px; text-align: center;">Consumo de Agua, Metros Cúbicos</td>
                                 </tr>
                                 <tr><td style="padding: 3px; border: 1px solid #ccc;">Lectura Contometro (Anterior)</td><td style="padding: 3px; border: 1px solid #ccc; text-align: right;">{lectura_anterior:.0f}</td></tr>
@@ -198,7 +206,7 @@ if not df.empty:
                         </div>
                         <div style="flex: 1;">
                             <table style="width: 100%; border: 1px solid #ccc; border-collapse: collapse; font-size: 0.85em;">
-                                <tr style="background-color: #f2f2f2 !important; font-weight: bold;">
+                                <tr class="bg-gray" style="font-weight: bold;">
                                     <td colspan="2" style="padding: 5px; text-align: center;">DEUDA</td>
                                 </tr>
                                 <tr><td style="padding: 3px; border: 1px solid #ccc;">&nbsp;</td><td style="padding: 3px; border: 1px solid #ccc; text-align: right;">&nbsp;</td></tr>
@@ -220,15 +228,22 @@ if not df.empty:
                             const printContent = window.parent.document.getElementById('receipt-content').innerHTML;
                             const win = window.open('', '', 'height=700,width=900');
                             win.document.write('<html><head><title>Recibo Dpto {selected_dept}</title>');
-                            win.document.write('<style>body {{ margin: 0; padding: 20px; }} * {{ -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }}</style>');
-                            win.document.write('</head><body>');
+                            win.document.write('<style>');
+                            win.document.write('body {{ margin: 0; padding: 20px; font-family: Arial, sans-serif; }}');
+                            win.document.write('* {{ -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }}');
+                            win.document.write('.bg-blue {{ background-color: #00008b !important; color: white !important; }}');
+                            win.document.write('.bg-yellow {{ background-color: #ffb300 !important; color: black !important; }}');
+                            win.document.write('.bg-gray {{ background-color: #f2f2f2 !important; }}');
+                            win.document.write('table {{ width: 100%; border-collapse: collapse; }}');
+                            win.document.write('</style></head><body>');
                             win.document.write(printContent);
                             win.document.write('</body></html>');
                             win.document.close();
                             win.setTimeout(function() {{
+                                win.focus();
                                 win.print();
                                 win.close();
-                            }}, 500);
+                            }}, 750);
                             </script>
                         """, height=0)
 
@@ -237,4 +252,4 @@ if not df.empty:
 else:
     st.error("No se pudo cargar la información de consumos.")
 
-st.caption("v2.3 - Fixed Print Colors & Sync")
+st.caption("v2.4 - Forced Color Print Rendering")

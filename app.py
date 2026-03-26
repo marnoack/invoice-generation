@@ -265,24 +265,24 @@ if not df.empty:
                                     <td colspan="2" style="padding: 5px; border: 1px solid #ccc; text-align: center;">DEUDA</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 5px; border: 1px solid #ccc;">&nbsp;</td>
-                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">&nbsp;</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc;">&nbsp;</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc; text-align: right;">&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 5px; border: 1px solid #ccc;">&nbsp;</td>
-                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">&nbsp;</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc;">&nbsp;</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc; text-align: right;">&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 5px; border: 1px solid #ccc;">&nbsp;</td>
-                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">&nbsp;</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc;">&nbsp;</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc; text-align: right;">&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 5px; border: 1px solid #ccc;">&nbsp;</td>
-                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">&nbsp;</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc;">&nbsp;</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc; text-align: right;">&nbsp;</td>
                                 </tr>
                                 <tr style="font-weight: bold; background-color: #f9f9f9;">
-                                    <td style="padding: 5px; border: 1px solid #ccc;">Total Deuda</td>
-                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">S/. 0.00</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc;">Total Deuda</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc; text-align: right;">S/. 0.00</td>
                                 </tr>
                             </table>
                         </div>

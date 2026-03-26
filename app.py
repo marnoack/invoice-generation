@@ -143,23 +143,37 @@ if not df.empty:
 
                 owners_html = "".join([f"<p style='margin:0; padding-left:100px;'>{name}</p>" for name in owner_list[1:]])
                 
-                receipt_html = f"""
-                <div id="receipt-content" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: white;">
-                    <style>
-                        /* Forzar colores en la vista previa y en la impresión */
-                        #receipt-content {{ 
-                            -webkit-print-color-adjust: exact !important; 
-                            print-color-adjust: exact !important; 
-                        }}
-                        .bg-blue {{ background-color: #00008b !important; color: white !important; }}
-                        .bg-yellow {{ background-color: #ffb300 !important; color: black !important; }}
-                        .bg-gray {{ background-color: #f2f2f2 !important; }}
-                        
-                        @media print {{
-                            #receipt-content {{ border: none !important; }}
-                            tr, td {{ -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }}
-                        }}
-                    </style>
+                # Definimos los estilos CSS por separado para reusarlos
+                receipt_styles = """
+                <style>
+                    .receipt-container { 
+                        font-family: Arial, sans-serif; 
+                        padding: 20px; 
+                        border: 1px solid #ddd; 
+                        border-radius: 10px; 
+                        background-color: white; 
+                        -webkit-print-color-adjust: exact !important; 
+                        print-color-adjust: exact !important; 
+                    }
+                    .bg-blue { background-color: #00008b !important; color: white !important; }
+                    .bg-yellow { background-color: #ffb300 !important; color: black !important; }
+                    .bg-gray { background-color: #f2f2f2 !important; }
+                    table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+                    .text-right { text-align: right; }
+                    .p-5 { padding: 5px; }
+                    .p-8 { padding: 8px; }
+                    .border-b { border-bottom: 1px solid #eee; }
+                    .border-all { border: 1px solid #ccc; }
+                    @media print {
+                        .receipt-container { border: none !important; width: 100%; }
+                        tr, td { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+                    }
+                </style>
+                """
+
+                # Cuerpo del recibo
+                receipt_body = f"""
+                <div class="receipt-container">
                     <h2 style="text-align: center; color: #1f4e79; margin-bottom: 5px;">RECIBO DE AGUA - LA FLORESTA 255</h2>
                     <hr>
                     <p><strong>Departamento:</strong> {selected_dept} | <strong>Periodo:</strong> {selected_period}</p>
@@ -167,53 +181,53 @@ if not df.empty:
                     {owners_html}
                     <p><strong>Coeficiente de Participación:</strong> {coef*100:.2f}%</p>
                     <hr>
-                    <table style="width: 100%; border-collapse: collapse;">
+                    <table>
                         <tr class="bg-blue">
-                            <td style="padding: 5px;">PRESUPUESTO TOTAL DEL MES:</td>
-                            <td style="text-align: right; padding: 5px;">S/. {monthly_budget:.2f}</td>
+                            <td class="p-5">PRESUPUESTO TOTAL DEL MES:</td>
+                            <td class="text-right p-5">S/. {monthly_budget:.2f}</td>
                         </tr>
                         <tr class="bg-blue">
                             <td colspan="2" style="padding: 10px 5px 5px 5px;"><strong>CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</strong></td>
                         </tr>
-                        <tr><td style="padding: 5px; border-bottom: 1px solid #eee;">Cuota de mantenimiento:</td><td style="text-align: right; padding: 5px; border-bottom: 1px solid #eee;">S/. {maintenance_fee:.2f}</td></tr>
-                        <tr><td style="padding: 5px; border-bottom: 1px solid #eee;">Cuota de Consumo de Agua Propio:</td><td style="text-align: right; padding: 5px; border-bottom: 1px solid #eee;">S/. {own_cost:.2f}</td></tr>
-                        <tr><td style="padding: 5px; border-bottom: 1px solid #eee;">Cuota Áreas Comunes y Fijo (inc. IGV):</td><td style="text-align: right; padding: 5px; border-bottom: 1px solid #eee;">S/. {common_cost_with_tax:.2f}</td></tr>
+                        <tr><td class="p-5 border-b">Cuota de mantenimiento:</td><td class="text-right p-5 border-b">S/. {maintenance_fee:.2f}</td></tr>
+                        <tr><td class="p-5 border-b">Cuota de Consumo de Agua Propio:</td><td class="text-right p-5 border-b">S/. {own_cost:.2f}</td></tr>
+                        <tr><td class="p-5 border-b">Cuota Áreas Comunes y Fijo (inc. IGV):</td><td class="text-right p-5 border-b">S/. {common_cost_with_tax:.2f}</td></tr>
                     </table>
                     <br>
-                    <table style="width: 100%; border-collapse: collapse;">
+                    <table>
                         <tr class="bg-blue" style="font-weight: bold;">
-                            <td style="padding: 8px;">CUOTA TOTAL DE MES:</td>
-                            <td style="text-align: right; padding: 8px;">S/. {total_to_pay:.2f}</td>
+                            <td class="p-8">CUOTA TOTAL DE MES:</td>
+                            <td class="text-right p-8">S/. {total_to_pay:.2f}</td>
                         </tr>
                         <tr class="bg-yellow" style="font-weight: bold;">
-                            <td style="padding: 8px;">FECHA DE VENCIMIENTO</td>
-                            <td style="text-align: right; padding: 8px;">{due_date_str}</td>
+                            <td class="p-8">FECHA DE VENCIMIENTO</td>
+                            <td class="text-right p-8">{due_date_str}</td>
                         </tr>
                     </table>
                     <br>
                     <div style="display: flex; gap: 10px;">
                         <div style="flex: 1;">
-                            <table style="width: 100%; border: 1px solid #ccc; border-collapse: collapse; font-size: 0.85em;">
+                            <table class="border-all" style="font-size: 0.85em;">
                                 <tr class="bg-blue" style="font-weight: bold;">
                                     <td colspan="2" style="padding: 5px; text-align: center;">Consumo de Agua, Metros Cúbicos</td>
                                 </tr>
-                                <tr><td style="padding: 3px; border: 1px solid #ccc;">Lectura Contometro (Anterior)</td><td style="padding: 3px; border: 1px solid #ccc; text-align: right;">{lectura_anterior:.0f}</td></tr>
-                                <tr><td style="padding: 3px; border: 1px solid #ccc;">Lectura Contometro (Actual)</td><td style="padding: 3px; border: 1px solid #ccc; text-align: right;">{lectura_actual:.0f}</td></tr>
-                                <tr><td style="padding: 3px; border: 1px solid #ccc;">Consumo Dpto.</td><td style="padding: 3px; border: 1px solid #ccc; text-align: right;">{own_consumption_m3:.2f}</td></tr>
-                                <tr><td style="padding: 3px; border: 1px solid #ccc;">Consumo Común</td><td style="padding: 3px; border: 1px solid #ccc; text-align: right;">{common_allocation_m3:.2f}</td></tr>
-                                <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td style="padding: 3px; border: 1px solid #ccc;">Consumo Total, m3</td><td style="padding: 3px; border: 1px solid #ccc; text-align: right;">{own_consumption_m3 + common_allocation_m3:.2f}</td></tr>
+                                <tr><td class="p-5 border-all">Lectura Contometro (Anterior)</td><td class="p-5 border-all text-right">{lectura_anterior:.0f}</td></tr>
+                                <tr><td class="p-5 border-all">Lectura Contometro (Actual)</td><td class="p-5 border-all text-right">{lectura_actual:.0f}</td></tr>
+                                <tr><td class="p-5 border-all">Consumo Dpto.</td><td class="p-5 border-all text-right">{own_consumption_m3:.2f}</td></tr>
+                                <tr><td class="p-5 border-all">Consumo Común</td><td class="p-5 border-all text-right">{common_allocation_m3:.2f}</td></tr>
+                                <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-5 border-all">Consumo Total, m3</td><td class="p-5 border-all text-right">{own_consumption_m3 + common_allocation_m3:.2f}</td></tr>
                             </table>
                         </div>
                         <div style="flex: 1;">
-                            <table style="width: 100%; border: 1px solid #ccc; border-collapse: collapse; font-size: 0.85em;">
+                            <table class="border-all" style="font-size: 0.85em;">
                                 <tr class="bg-gray" style="font-weight: bold;">
                                     <td colspan="2" style="padding: 5px; text-align: center;">DEUDA</td>
                                 </tr>
-                                <tr><td style="padding: 3px; border: 1px solid #ccc;">&nbsp;</td><td style="padding: 3px; border: 1px solid #ccc; text-align: right;">&nbsp;</td></tr>
-                                <tr><td style="padding: 3px; border: 1px solid #ccc;">&nbsp;</td><td style="padding: 3px; border: 1px solid #ccc; text-align: right;">&nbsp;</td></tr>
-                                <tr><td style="padding: 3px; border: 1px solid #ccc;">&nbsp;</td><td style="padding: 3px; border: 1px solid #ccc; text-align: right;">&nbsp;</td></tr>
-                                <tr><td style="padding: 3px; border: 1px solid #ccc;">&nbsp;</td><td style="padding: 3px; border: 1px solid #ccc; text-align: right;">&nbsp;</td></tr>
-                                <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td style="padding: 3px; border: 1px solid #ccc;">Total Deuda</td><td style="padding: 3px; border: 1px solid #ccc; text-align: right;">S/. 0.00</td></tr>
+                                <tr><td class="p-5 border-all">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
+                                <tr><td class="p-5 border-all">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
+                                <tr><td class="p-5 border-all">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
+                                <tr><td class="p-5 border-all">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
+                                <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-5 border-all">Total Deuda</td><td class="p-5 border-all text-right">S/. 0.00</td></tr>
                             </table>
                         </div>
                     </div>
@@ -221,29 +235,28 @@ if not df.empty:
                 """
             
                 with st.expander("Ver detalle del cálculo", expanded=True):
-                    st.markdown(receipt_html, unsafe_allow_html=True)
+                    # Mostramos el HTML combinado (estilos + cuerpo)
+                    st.markdown(receipt_styles + receipt_body, unsafe_allow_html=True)
+                    
                     if st.button("🖨️ Imprimir / Guardar PDF"):
+                        # Inyectamos directamente el contenido en el script para evitar problemas de búsqueda en el DOM
+                        escaped_body = receipt_body.replace("`", "\\`").replace("${", "\\${")
+                        escaped_styles = receipt_styles.replace("`", "\\`").replace("${", "\\${")
+                        
                         st.components.v1.html(f"""
                             <script>
-                            const printContent = window.parent.document.getElementById('receipt-content').innerHTML;
                             const win = window.open('', '', 'height=700,width=900');
                             win.document.write('<html><head><title>Recibo Dpto {selected_dept}</title>');
-                            win.document.write('<style>');
-                            win.document.write('body {{ margin: 0; padding: 20px; font-family: Arial, sans-serif; }}');
-                            win.document.write('* {{ -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }}');
-                            win.document.write('.bg-blue {{ background-color: #00008b !important; color: white !important; }}');
-                            win.document.write('.bg-yellow {{ background-color: #ffb300 !important; color: black !important; }}');
-                            win.document.write('.bg-gray {{ background-color: #f2f2f2 !important; }}');
-                            win.document.write('table {{ width: 100%; border-collapse: collapse; }}');
-                            win.document.write('</style></head><body>');
-                            win.document.write(printContent);
+                            win.document.write(`{escaped_styles}`);
+                            win.document.write('</head><body>');
+                            win.document.write(`{escaped_body}`);
                             win.document.write('</body></html>');
                             win.document.close();
                             win.setTimeout(function() {{
                                 win.focus();
                                 win.print();
                                 win.close();
-                            }}, 750);
+                            }}, 1000);
                             </script>
                         """, height=0)
 
@@ -252,4 +265,4 @@ if not df.empty:
 else:
     st.error("No se pudo cargar la información de consumos.")
 
-st.caption("v2.4 - Forced Color Print Rendering")
+st.caption("v2.5 - Fixed Detail Visibility & Direct Print Sync")

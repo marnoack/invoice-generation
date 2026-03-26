@@ -8,7 +8,7 @@ WATER_RATE = 2.28684864
 SEWAGE_RATE = 1.4342
 
 # Updated Fees
-TOTAL_FIXED_FEE_BUILDING = 6.30 
+TOTAL_FIXED_FEE_BUILDING = 6.30
 TAX_RATE = 0.18 # 18% IGV
 
 st.set_page_config(page_title="Calculadora de Recibo de Agua", page_icon="💧")
@@ -164,7 +164,7 @@ if not df.empty:
                 variable_cost = water_component + sewage_component
 
                 # 5. Fixed Fee divided by coefficient
-                individual_fixed_fee = TOTAL_FIXED_FEE_BUILDING * coef
+                individual_fixed_fee = (TOTAL_FIXED_FEE_BUILDING * coef) * (1 + TAX_RATE)
                 
                 # 6. Budget for the month
                 monthly_budget = BUDGETS.get(selected_period, 0.0)

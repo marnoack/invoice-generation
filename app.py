@@ -155,6 +155,9 @@ if not df.empty:
                 # 4. Costs
                 own_cost = calculate_variable_cost(own_consumption_m3)
                 common_cost = calculate_variable_cost(common_allocation_m3)
+
+                # Apply tax to the common cost as requested (18%)
+                common_cost_with_tax = common_cost * (1 + TAX_RATE)
                 
                 water_component = total_billing_m3 * WATER_RATE
                 sewage_component = total_billing_m3 * SEWAGE_RATE
@@ -192,17 +195,17 @@ if not df.empty:
                     <p><strong>Propietario(s):</strong> {owner_list[0]}</p>
                     {owners_html}
                     <p><strong>Coeficiente de Participación:</strong> {coef*100:.2f}%</p>
-                    <hr> 
+                    <hr>
                     <table style="width: 100%; border-collapse: collapse;">
                         <tr><td>Presupuesto total del mes:</td><td style="text-align: right;">S/. {monthly_budget:.2f}</td></tr>
-                        <tr><td colspan="2">Conceptos de su Cuota del mes de {selected_period}</td></tr>
-                        <tr><td>Cuota de mantenimiento:</td><td style="text-align: right;">S/. {maintenance_fee:.2f}</td></tr>    
-                        <tr><td>Cuota de Consumo de Agua Propio:</td><td style="text-align: right;">S/. {own_cost:.2f}</td></tr>
-                        <tr><td>Cuota Áreas Comunes:</td><td style="text-align: right;">S/. {common_cost:.2f}</td></tr> 
-                        <tr style="font-weight: bold; border-top: 1px solid #ccc;"><td>Consumo Total Facturable:</td><td style="text-align: right;">{total_billing_m3:.2f} m³</td></tr>
+                        <tr><td colspan="2" style="padding-top:10px;"><strong>Conceptos de su Cuota del mes de {selected_period}</strong></td></tr>
+                        <tr><td>Cuota de mantenimiento:</td><td style="text-align: right;">S/. {maintenance_fee:.2f}</td></tr>
+                        <tr><td>Cuota de Consumo de Agua Propio:</td><td style="text-align: right;">S/. {own_cost_net:.2f}</td></tr>
+                        <tr><td>Cuota Áreas Comunes (inc. IGV):</td><td style="text-align: right;">S/. {common_cost_with_tax:.2f}</td></tr>
                     </table>
                     <br>
                     <table style="width: 100%; border-collapse: collapse;">
+                        <tr style="font-weight: bold; border-bottom: 1px solid #ccc;"><td>Consumo Total Facturable:</td><td style="text-align: right;">{total_billing_m3:.2f} m³</td></tr>
                         <tr><td>Costo Agua ({WATER_RATE:.4f}/m³):</td><td style="text-align: right;">S/. {water_component:.2f}</td></tr>
                         <tr><td>Costo Alcantarillado ({SEWAGE_RATE:.4f}/m³):</td><td style="text-align: right;">S/. {sewage_component:.2f}</td></tr>
                         <tr><td>Cargo Fijo Proporcional:</td><td style="text-align: right;">S/. {individual_fixed_fee:.2f}</td></tr>

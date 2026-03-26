@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 
 # --- DATE CALCULATION ---
 current_date = datetime.now()
+emission_date_str = current_date.strftime("%d/%m/%Y")
 due_date = current_date + timedelta(days=10)
 due_date_str = due_date.strftime("%d/%m/%Y")
 

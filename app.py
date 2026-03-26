@@ -142,6 +142,9 @@ if not df.empty:
                 m3.metric("Total a Pagar", f"S/. {total_to_pay:.2f}")
 
                 owners_html = "".join([f"<p style='margin:0; padding-left:100px;'>{name}</p>" for name in owner_list[1:]])
+
+                # Generate a simple receipt number based on period and dept
+                invoice_num = f"{selected_period.replace(' ', '')}-{selected_dept}"
                 
                 # Definimos los estilos CSS por separado para reusarlos
                 receipt_styles = """

@@ -213,19 +213,19 @@ if not df.empty:
                     <p><strong>Coeficiente de Participación:</strong> {coef*100:.2f}%</p>
                     <hr>
                     <table style="width: 100%; border-collapse: collapse;">
-                        <tr><td>Presupuesto total del mes:</td><td style="text-align: right;">S/. {monthly_budget:.2f}</td></tr>
-                        <tr><td colspan="2" style="padding-top:10px;"><strong>Conceptos de su Cuota del mes de {selected_period}</strong></td></tr>
+                        <tr style="background-color: #00008b; color: white;"><td>PRESUPUESTO TOTAL DEL MES:</td><td style="text-align: right;">S/. {monthly_budget:.2f}</td></tr>
+                        <tr style="background-color: #00008b; color: white;"><td colspan="2" style="padding-top:10px;"><strong>CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</strong></td></tr>
                         <tr><td>Cuota de mantenimiento:</td><td style="text-align: right;">S/. {maintenance_fee:.2f}</td></tr>
                         <tr><td>Cuota de Consumo de Agua Propio:</td><td style="text-align: right;">S/. {own_cost:.2f}</td></tr>
                         <tr><td>Cuota Áreas Comunes y Fijo (inc. IGV):</td><td style="text-align: right;">S/. {common_cost_with_tax:.2f}</td></tr>
                     </table>
                     <br>
                     <table style="width: 100%; border-collapse: collapse;">
-                        <tr style="font-weight: bold; font-size: 0.8 em; border-top: 1px solid #000;">
+                        <tr style="background-color: #00008b; color: white; font-weight: bold; font-size: 0.8 em; border-top: 1px solid #000;">
                             <td style="padding-top: 5px;">CUOTA TOTAL DE MES:</td>
                             <td style="text-align: right; padding-top: 5px;">S/. {total_to_pay:.2f}</td>
                         </tr>
-                         <tr style="font-weight: bold; font-size: 0.8 em; border-top: 1px solid #000;">
+                         <tr style="background-color: #ffb300; font-weight: bold; font-size: 0.8 em; border-top: 1px solid #000;">
                             <td style="padding-top: 5px;">FECHA DE VENCIMIENTO</td>
                             <td style="text-align: right; padding-top: 5px;">{due_date_str}</td>
                         </tr>
@@ -234,7 +234,7 @@ if not df.empty:
                     <div style="display: flex; gap: 0px;">
                         <div style="flex: 1;">
                             <table style="width: 100%; border: 1px solid #ccc; border-collapse: collapse; font-size: 0.9em;">
-                                <tr style="background-color: #f2f2f2; font-weight: bold;">
+                                <tr style="background-color: #00008b; color: white; font-weight: bold;">
                                     <td colspan="2" style="padding: 5px; border: 1px solid #ccc; text-align: center;">Consumo de Agua, Metros Cúbicos</td>
                                 </tr>
                                 <tr>

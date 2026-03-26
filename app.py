@@ -4,8 +4,11 @@ import pandas as pd
 
 # --- CONFIGURATION ---
 # Fixed Rates (per m3)
-WATER_RATE = 2.28684864
-SEWAGE_RATE = 1.4342
+#WATER_RATE = 2.28684864
+#SEWAGE_RATE = 1.4342
+WATER_RATE = 2.29
+SEWAGE_RATE = 1.43
+
 
 # Updated Fees
 TOTAL_FIXED_FEE_BUILDING = 6.30
@@ -175,8 +178,8 @@ if not df.empty:
                 # 8. Totals (Subtotal + Tax + Maintenance Fee)
                 subtotal_neto = variable_cost + individual_fixed_fee
                 tax_amount = subtotal_neto * TAX_RATE
-                #total_to_pay = subtotal_neto + tax_amount + maintenance_fee
-                total_to_pay = common_cost_with_tax + maintenance_fee
+                total_to_pay = subtotal_neto + tax_amount + maintenance_fee
+                #total_to_pay = common_cost_with_tax + maintenance_fee
                 
                 st.divider()
                 st.subheader(f"Recibo: Dpto {selected_dept} - {selected_period}")

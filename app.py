@@ -191,7 +191,7 @@ if not df.empty:
 
                 # Create the HTML content for printing
                 owners_html = "".join([f"<p style='margin:0; padding-left:100px;'>{name}</p>" for name in owner_list[1:]])
-                                receipt_html = f"""
+                receipt_html = f"""
                 <div id="receipt-content" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
                     <h2 style="text-align: center; color: #1f4e79;">RECIBO DE AGUA - LA FLORESTA 255</h2>
                     <hr>

@@ -221,15 +221,11 @@ if not df.empty:
                     </table>
                     <br>
                     <table style="width: 100%; border-collapse: collapse;">
-                        <tr style="font-weight: bold; border-bottom: 1px dotted #ccc;">
-                            <td style="padding: 10px 0;">Consumo Total Facturable:</td>
-                            <td style="text-align: right; padding: 10px 0;">{total_billing_m3:.2f} m³</td>
-                        </tr>
-                        <tr style="font-weight: bold; font-size: 1.0 em; border-top: 1px solid #000;">
+                        <tr style="font-weight: bold; font-size: 0.8 em; border-top: 1px solid #000;">
                             <td style="padding-top: 5px;">CUOTA TOTAL DE MES:</td>
                             <td style="text-align: right; padding-top: 5px;">S/. {total_to_pay:.2f}</td>
                         </tr>
-                         <tr style="font-weight: bold; font-size: 1.0 em; border-top: 1px solid #000;">
+                         <tr style="font-weight: bold; font-size: 0.8 em; border-top: 1px solid #000;">
                             <td style="padding-top: 5px;">FECHA DE VENCIMIENTO</td>
                             <td style="text-align: right; padding-top: 5px;">{due_date_str}</td>
                         </tr>
@@ -242,24 +238,24 @@ if not df.empty:
                                     <td colspan="2" style="padding: 5px; border: 1px solid #ccc; text-align: center;">Consumo de Agua, Metros Cúbicos</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 5px; border: 1px solid #ccc;">Lectura Contometro (Anterior)</td>
-                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">{lectura_anterior:.0f}</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc;">Lectura Contometro (Anterior)</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc; text-align: right;">{lectura_anterior:.0f}</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 5px; border: 1px solid #ccc;">Lectura Contometro (Actual)</td>
-                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">{lectura_actual:.0f}</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc;">Lectura Contometro (Actual)</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc; text-align: right;">{lectura_actual:.0f}</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 5px; border: 1px solid #ccc;">Consumo Dpto.</td>
-                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">{own_consumption_m3:.2f}</td>
+                                    <td style="padding: 3px; border-top: 1px solid #ccc;">Consumo Dpto.</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc; text-align: right;">{own_consumption_m3:.2f}</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 5px; border: 1px solid #ccc;">Consumo Común</td>
-                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">{common_allocation_m3:.2f}</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc;">Consumo Común</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc; text-align: right;">{common_allocation_m3:.2f}</td>
                                 </tr>
                                 <tr style="font-weight: bold; background-color: #f9f9f9;">
-                                    <td style="padding: 5px; border: 1px solid #ccc;">Consumo Total, m3</td>
-                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">{own_consumption_m3 + common_allocation_m3:.2f}</td>
+                                    <td style="padding: 3px; border-bottom: 1px solid #ccc;">Consumo Total, m3</td>
+                                    <td style="padding: 3px; border: 1px solid #ccc; text-align: right;">{own_consumption_m3 + common_allocation_m3:.2f}</td>
                                 </tr>
                             </table>
                         </div>

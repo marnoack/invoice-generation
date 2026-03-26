@@ -162,6 +162,7 @@ if not df.empty:
                     .header-table { width: 100%; border: none; margin-bottom: 0px; table-layout: fixed; }
                     .header-col { vertical-align: middle; }
                     .bg-blue { background-color: #00008b !important; color: white !important; }
+                    .bg-black { background-color: #333 !important; color: white !important; }
                     .bg-steel { background-color: #4682B4 !important; color: white !important; }
                     .bg-yellow { background-color: #ffb300 !important; color: black !important; }
                     .bg-gray { background-color: #f2f2f2 !important; }
@@ -211,11 +212,11 @@ if not df.empty:
                     <p><strong>Coeficiente de Participación:</strong> {coef*100:.2f}%</p>
                     <hr>
                     <table>
-                        <tr class="bg-blue">
+                        <tr class="bg-black">
                             <td class="p-5">PRESUPUESTO TOTAL DEL MES:</td>
                             <td class="text-right p-5">S/. {monthly_budget:.2f}</td>
                         </tr>
-                        <tr class="bg-blue">
+                        <tr class="bg-black">
                             <td colspan="2" style="padding: 10px 5px 5px 5px;"><strong>CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</strong></td>
                         </tr>
                         <tr><td class="p-5 border-b">Cuota de mantenimiento:</td><td class="text-right p-5 border-b">S/. {maintenance_fee:.2f}</td></tr>
@@ -224,7 +225,7 @@ if not df.empty:
                     </table>
                     <br>
                     <table>
-                        <tr class="bg-blue" style="font-weight: bold;">
+                        <tr class="bg-steel" style="font-weight: bold;">
                             <td class="p-8">CUOTA TOTAL DE MES:</td>
                             <td class="text-right p-8">S/. {total_to_pay:.2f}</td>
                         </tr>

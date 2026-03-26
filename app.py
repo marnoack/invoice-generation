@@ -253,7 +253,31 @@ if not df.empty:
                             </table>
                         </div>
                         <div style="flex: 1;">
-                            <!-- Espacio para futura información o columna vacía -->
+                            <table style="width: 100%; border: 1px solid #ccc; border-collapse: collapse; font-size: 0.9em;">
+                                <tr style="background-color: #f2f2f2; font-weight: bold;">
+                                    <td colspan="2" style="padding: 5px; border: 1px solid #ccc; text-align: center;">DEUDA</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 5px; border: 1px solid #ccc;">&nbsp;</td>
+                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 5px; border: 1px solid #ccc;">&nbsp;</td>
+                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 5px; border: 1px solid #ccc;">&nbsp;</td>
+                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 5px; border: 1px solid #ccc;">&nbsp;</td>
+                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">&nbsp;</td>
+                                </tr>
+                                <tr style="font-weight: bold; background-color: #f9f9f9;">
+                                    <td style="padding: 5px; border: 1px solid #ccc;">Total Deuda</td>
+                                    <td style="padding: 5px; border: 1px solid #ccc; text-align: right;">S/. 0.00</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>

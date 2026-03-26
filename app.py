@@ -174,11 +174,25 @@ if not df.empty:
                 # Cuerpo del recibo
                 receipt_body = f"""
                 <div class="receipt-container">
-                   <div class="bg-steel text-center" style="padding: 10px; border-radius: 5px 5px 0 0;">
-                        <h2 style="margin: 0; font-size: 1.4em;">JUNTA DE PROPIETARIOS EDIFICIO LA FLORESTA 255</h2>
-                    </div>
+                    <table class="header-table bg-steel" style="border-radius: 5px 5px 0 0;">
+                        <tr>
+                            <td class="header-col text-center" style="width: 25%;">
+                                <!-- Logo Placeholder -->
+                                <div style="color: rgba(255,255,255,0.5); font-size: 0.7em;">[LOGO]</div>
+                            </td>
+                            <td class="header-col text-center" style="width: 50%; padding: 10px 0;">
+                                <h2 style="margin: 0; font-size: 1.0em; line-height: 1.2;">JUNTA DE PROPIETARIOS<br>EDIFICIO LA FLORESTA 255</h2>
+                            </td>
+                            <td class="header-col text-right invoice-info" style="width: 25%; padding-right: 15px;">
+                                <strong>RECIBO N°</strong><br>
+                                {invoice_num}<br>
+                                <strong>EMISIÓN</strong><br>
+                                {emission_date_str}
+                            </td>
+                        </tr>
+                    </table>
                     <div class="text-center" style="padding: 5px; border-bottom: 2px solid #4682B4; margin-bottom: 15px;">
-                        <p style="margin: 0; font-weight: bold; color: #333;">Av. De La Floresta Nº 255</p>
+                        <p style="margin: 0; font-weight: bold; color: #333; font-size: 0.9em;">Av. De La Floresta Nº 255</p>
                     </div>
                     <p><strong>Departamento:</strong> {selected_dept} | <strong>Periodo:</strong> {selected_period}</p>
                     <p><strong>Propietario(s):</strong> {owner_list[0]}</p>

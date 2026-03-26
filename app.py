@@ -159,15 +159,20 @@ if not df.empty:
                         -webkit-print-color-adjust: exact !important; 
                         print-color-adjust: exact !important; 
                     }
+                    .header-table { width: 100%; border: none; margin-bottom: 0px; table-layout: fixed; }
+                    .header-col { vertical-align: middle; }
                     .bg-blue { background-color: #00008b !important; color: white !important; }
+                    .bg-steel { background-color: #4682B4 !important; color: white !important; }
                     .bg-yellow { background-color: #ffb300 !important; color: black !important; }
                     .bg-gray { background-color: #f2f2f2 !important; }
                     table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
                     .text-right { text-align: right; }
+                    .text-center { text-align: center; }
                     .p-5 { padding: 5px; }
                     .p-8 { padding: 8px; }
                     .border-b { border-bottom: 1px solid #eee; }
                     .border-all { border: 1px solid #ccc; }
+                    .invoice-info { font-size: 0.85em; color: #333; line-height: 1.2; }
                     @media print {
                         .receipt-container { border: none !important; width: 100%; }
                         tr, td { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
@@ -178,14 +183,16 @@ if not df.empty:
                 # Cuerpo del recibo
                 receipt_body = f"""
                 <div class="receipt-container">
-                    <table class="header-table bg-steel" style="border-radius: 5px 5px 0 0;">
+                    <table class="header-table" style="border-radius: 5px 5px 0 0;">
                         <tr>
                             <td class="header-col text-center" style="width: 25%;">
                                 <!-- Logo Placeholder -->
-                                <div style="color: rgba(255,255,255,0.5); font-size: 0.7em;">[LOGO]</div>
+                                <div style="color: #ccc; font-size: 0.7em;">[LOGO]</div>
                             </td>
-                            <td class="header-col text-center" style="width: 50%; padding: 10px 0;">
-                                <h2 style="margin: 0; font-size: 1.0em; line-height: 1.2;">JUNTA DE PROPIETARIOS<br>EDIFICIO LA FLORESTA 255</h2>
+                            <td class="header-col text-center bg-steel" style="width: 50%; padding: 15px 0;">
+                                <h2 style="margin: 0; font-size: 1.1em; line-height: 1.3; color: white; text-align: center;">
+                                    JUNTA DE PROPIETARIOS<br>EDIFICIO LA FLORESTA 255
+                                </h2>
                             </td>
                             <td class="header-col text-right invoice-info" style="width: 25%; padding-right: 15px;">
                                 <strong>RECIBO N°</strong><br>

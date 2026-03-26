@@ -174,8 +174,12 @@ if not df.empty:
                 # Cuerpo del recibo
                 receipt_body = f"""
                 <div class="receipt-container">
-                    <h2 style="text-align: center; color: #1f4e79; margin-bottom: 5px;">RECIBO DE AGUA - LA FLORESTA 255</h2>
-                    <hr>
+                   <div class="bg-steel text-center" style="padding: 10px; border-radius: 5px 5px 0 0;">
+                        <h2 style="margin: 0; font-size: 1.4em;">JUNTA DE PROPIETARIOS EDIFICIO LA FLORESTA 255</h2>
+                    </div>
+                    <div class="text-center" style="padding: 5px; border-bottom: 2px solid #4682B4; margin-bottom: 15px;">
+                        <p style="margin: 0; font-weight: bold; color: #333;">Av. De La Floresta Nº 255</p>
+                    </div>
                     <p><strong>Departamento:</strong> {selected_dept} | <strong>Periodo:</strong> {selected_period}</p>
                     <p><strong>Propietario(s):</strong> {owner_list[0]}</p>
                     {owners_html}

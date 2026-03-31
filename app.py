@@ -133,24 +133,17 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     invoice_num = f"{selected_period.replace(' ', '')}-{dept}"
     owners_html = "".join([f"<p style='margin:0; padding-left:100px;'>{name}</p>" for name in owner_list[1:]])
 
- receipt_styles = """
+    receipt_styles = """
     <style>
         .receipt-container { 
-            font-family: Arial, sans-serif; 
-            padding: 20px; 
-            border: 1px solid #ddd; 
-            border-radius: 10px; 
-            background-color: white; 
-            margin-bottom: 30px;
-            max-width: 800px; 
-            margin-left: auto;
-            margin-right: auto;
-            box-sizing: border-box;
-            -webkit-print-color-adjust: exact !important; 
-            print-color-adjust: exact !important; 
+            font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd; 
+            border-radius: 10px; background-color: white; margin-bottom: 30px;
+            max-width: 800px; /* Limits width to avoid overflow */
+            margin-left: auto; margin-right: auto; box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; 
         }
-        .header-table { width: 100%; border: none; margin-bottom: 0px; table-layout: fixed; border-spacing: 0; }
-        .header-col { vertical-align: middle; height: 100px; }
+        .header-table { width: 100%; border: none; margin-bottom: 0px; table-layout: fixed; }
+        .header-col { vertical-align: middle; }
         .bg-blue { background-color: #00008b !important; color: white !important; }
         .bg-black { background-color: #333 !important; color: white !important; }
         .bg-steel { background-color: #4682B4 !important; color: white !important; }
@@ -164,35 +157,30 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         .border-b { border-bottom: 1px solid #eee; }
         .border-all { border: 1px solid #ccc; }
         .invoice-info { font-size: 0.85em; color: #333; line-height: 1.2; }
-        .logo-img { max-height: 75px; width: auto; display: block; margin: 0 auto; }
+        .logo-img { max-height: 80px; width: auto; }
         .info-table td { vertical-align: top; padding: 2px 0; }
-        .user-code-box { border: 1px solid #333; text-align: center; overflow: hidden; }
+        .user-code-box { border: 1px solid #333; text-align: center; padding: 5px; }      
         @media print {
             body { margin: 0; padding: 0; }
-            .receipt-container { 
-                border: none !important; 
-                width: 100%; 
-                max-width: 100%;
-                page-break-after: always; 
-                padding: 10px;
-            }
+            .receipt-container { border: none !important; width: 100%; max-width: 100%; page-break-after: always; padding: 10px;}
             tr, td { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
     </style>
     """
-   receipt_body = f"""
+
+    receipt_body = f"""
     <div class="receipt-container">
         <table class="header-table" style="border-radius: 5px 5px 0 0; overflow: hidden;">
             <tr>
                 <td class="header-col text-center" style="width: 20%; border: 1px solid #eee;">
-                    <img src={logo_url} class="logo-img" alt="Logo">
+                    <img src="{logo_url}" class="logo-img" alt="Logo">
                 </td>
-                <td class="header-col text-center bg-steel" style="width: 55%; padding: 10px 0;">
-                    <h2 style="margin: 0; font-size: 1.1em; line-height: 1.2; color: white;">
+                <td class="header-col text-center" style="width: 55%; padding: 10px 0;">
+                    <h2 class="bg-steel" style="margin: 0; font-size: 1.1em; line-height: 1.2; color: white;">
                         JUNTA DE PROPIETARIOS<br>EDIFICIO LA FLORESTA 255
                     </h2>
-                    <p style="margin: 5px 0 0 0; font-weight: bold; color: rgba(255,255,255,0.9); font-size: 0.85em;">
-                        Av. De La Floresta Nº 255
+                    <p style="margin: 5px 0 0 0; background:#FFF; color: #333; font-size: 0.8em;">
+                        Av. De La Floresta Nº 255, Surco
                     </p>
                 </td>
                 <td class="header-col text-right invoice-info" style="width: 25%; padding-right: 15px; border: 1px solid #eee;">
@@ -200,10 +188,8 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
                     <strong>EMISIÓN</strong><br>{emission_date_str}
                 </td>
             </tr>
-        </table>
-        
-        <div style="height: 15px;"></div>
-        
+        </table>        
+        <div style="height: 15px;"></div>      
         <table class="info-table" style="width: 100%; font-size: 0.9em; border-collapse: collapse;">
             <tr>
                 <td style="width: 75%;">
@@ -214,18 +200,13 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
                 </td>
                 <td style="width: 25%; vertical-align: middle;">
                     <div class="user-code-box">
-                        <div class="bg-steel" style="color: white; font-weight: bold; font-size: 0.75em; padding: 4px 0;">
-                            <div>CÓDIGO DE</div>
-                            <div>USUARIO</div>
-                        </div>
-                        <div style="font-weight: bold; font-size: 1.1em; letter-spacing: 1px; padding: 5px 0;">FT{dept}</div>
+                        <div style="font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #333; margin-bottom: 4px; padding-bottom: 2px;">CÓDIGO DE USUARIO</div>
+                        <div style="font-weight: bold; font-size: 1.1em; letter-spacing: 1px;">FT{dept}</div>
                     </div>
                 </td>
             </tr>
         </table>
-
         <hr style="margin: 10px 0;">
-        
         <table style="font-size: 0.9em;">
             <tr class="bg-black"><td>PRESUPUESTO TOTAL DEL MES:</td><td class="text-right p-5">S/. {monthly_budget:.2f}</td></tr>
             <tr class="bg-black"><td colspan="2">CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</td></tr>
@@ -234,7 +215,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
             <tr><td class="p-5 border-b">Cuota Áreas Comunes y Fijo (inc. IGV):</td><td class="text-right p-5 border-b">S/. {common_cost_with_tax:.2f}</td></tr>
         </table>
         <br>
-        <table style="font-size: 0.95em;">
+        <table style="font-size: 0.9em;">
             <tr class="bg-steel" style="font-weight: bold;"><td class="p-8">CUOTA TOTAL DE MES:</td><td class="text-right p-8">S/. {total_to_pay:.2f}</td></tr>
             <tr class="bg-yellow" style="font-weight: bold;"><td class="p-8">FECHA DE VENCIMIENTO</td><td class="text-right p-8">{due_date_str}</td></tr>
         </table>
@@ -243,8 +224,8 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
             <div style="flex: 1;">
                 <table class="border-all" style="font-size: 0.8em;">
                     <tr class="bg-black" style="font-weight: bold;"><td colspan="2" style="padding: 5px; text-align: center;">Consumo de Agua (m3)</td></tr>
-                    <tr><td class="p-5 border-all">Lectura Anterior</td><td class="p-5 border-all text-right">{lectura_anterior_m3:.2f}</td></tr>
-                    <tr><td class="p-5 border-all">Lectura Actual</td><td class="p-5 border-all text-right">{lectura_actual_m3:.2f}</td></tr>
+                    <tr><td class="p-5 border-all">Lectura Anterior</td><td class="p-5 border-all text-right">{lectura_anterior:.0f}</td></tr>
+                    <tr><td class="p-5 border-all">Lectura Actual</td><td class="p-5 border-all text-right">{lectura_actual:.0f}</td></tr>
                     <tr><td class="p-5 border-all">Consumo Dpto.</td><td class="p-5 border-all text-right">{own_consumption_m3:.2f}</td></tr>
                     <tr><td class="p-5 border-all">Consumo Común</td><td class="p-5 border-all text-right">{common_allocation_m3:.2f}</td></tr>
                     <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-5 border-all">Total, m3</td><td class="p-5 border-all text-right">{total_billing_m3:.2f}</td></tr>

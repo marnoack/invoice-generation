@@ -177,8 +177,8 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
                     <h2 class="bg-steel" style="margin: 0; font-size: 1.1em; line-height: 1.2; color: white;">
                         JUNTA DE PROPIETARIOS<br>EDIFICIO LA FLORESTA 255
                     </h2>
-                    <p style="margin: 5px 0 0 0; font-weight: bold; background:#FFF"; color: #eee; font-size: 0.85em;">
-                        Av. De La Floresta Nº 255
+                    <p style="margin: 5px 0 0 0; font-weight: bold; background:#FFF; color: #333; font-size: 0.8em;">
+                        Av. De La Floresta Nº 255, Surco
                     </p>
                 </td>
                 <td class="header-col text-right invoice-info" style="width: 25%; padding-right: 15px; border: 1px solid #eee;">
@@ -187,11 +187,6 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
                 </td>
             </tr>
         </table>
-
-        
-        <div class="text-center" style="padding: 5px; border-bottom: 2px solid #4682B4; margin-bottom: 15px;">
-            <p style="margin: 0; font-weight: bold; color: #333; font-size: 0.9em;">Av. De La Floresta Nº 255</p>
-        </div>
         <p style="font-size: 0.9em;"><strong>Departamento:</strong> {dept} | <strong>Periodo:</strong> {selected_period}</p>
         <p style="font-size: 0.9em;"><strong>Propietario(s):</strong> {owner_list[0]}</p>
         {owners_html}

@@ -112,6 +112,8 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         .receipt-container { 
             font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd; 
             border-radius: 10px; background-color: white; margin-bottom: 30px;
+            max-width: 800px; /* Limits width to avoid overflow */
+            margin-left: auto; margin-right: auto; box-sizing: border-box;
             -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; 
         }
         .header-table { width: 100%; border: none; margin-bottom: 0px; table-layout: fixed; }
@@ -130,7 +132,8 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         .border-all { border: 1px solid #ccc; }
         .invoice-info { font-size: 0.85em; color: #333; line-height: 1.2; }
         @media print {
-            .receipt-container { border: none !important; width: 100%; page-break-after: always; }
+            body { margin: 0; padding: 0; }
+            .receipt-container { border: none !important; width: 100%; max-width: 100%; page-break-after: always; padding: 10px;}
             tr, td { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
     </style>
@@ -144,7 +147,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
                     <div style="color: #ccc; font-size: 0.7em;">[LOGO]</div>
                 </td>
                 <td class="header-col text-center bg-steel" style="width: 50%; padding: 15px 0;">
-                    <h2 style="margin: 0; font-size: 1.1em; line-height: 1.3; color: white; text-align: center;">
+                    <h2 style="margin: 0; font-size: 1.05em; line-height: 1.3; color: white; text-align: center;">
                         JUNTA DE PROPIETARIOS<br>EDIFICIO LA FLORESTA 255
                     </h2>
                 </td>
@@ -157,12 +160,12 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         <div class="text-center" style="padding: 5px; border-bottom: 2px solid #4682B4; margin-bottom: 15px;">
             <p style="margin: 0; font-weight: bold; color: #333; font-size: 0.9em;">Av. De La Floresta Nº 255</p>
         </div>
-        <p><strong>Departamento:</strong> {dept} | <strong>Periodo:</strong> {selected_period}</p>
-        <p><strong>Propietario(s):</strong> {owner_list[0]}</p>
+        <p style="font-size: 0.9em;"><strong>Departamento:</strong> {dept} | <strong>Periodo:</strong> {selected_period}</p>
+        <p style="font-size: 0.9em;"><strong>Propietario(s):</strong> {owner_list[0]}</p>
         {owners_html}
         <p><strong>Coeficiente de Participación:</strong> {coef*100:.2f}%</p>
         <hr>
-        <table>
+        <table style="font-size: 0.9em;">
             <tr class="bg-black"><td>PRESUPUESTO TOTAL DEL MES:</td><td class="text-right p-5">S/. {monthly_budget:.2f}</td></tr>
             <tr class="bg-black"><td colspan="2">CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</td></tr>
             <tr><td class="p-5 border-b">Cuota de mantenimiento:</td><td class="text-right p-5 border-b">S/. {maintenance_fee:.2f}</td></tr>
@@ -170,14 +173,14 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
             <tr><td class="p-5 border-b">Cuota Áreas Comunes y Fijo (inc. IGV):</td><td class="text-right p-5 border-b">S/. {common_cost_with_tax:.2f}</td></tr>
         </table>
         <br>
-        <table>
+        <table style="font-size: 0.95em;">
             <tr class="bg-steel" style="font-weight: bold;"><td class="p-8">CUOTA TOTAL DE MES:</td><td class="text-right p-8">S/. {total_to_pay:.2f}</td></tr>
             <tr class="bg-yellow" style="font-weight: bold;"><td class="p-8">FECHA DE VENCIMIENTO</td><td class="text-right p-8">{due_date_str}</td></tr>
         </table>
         <br>
         <div style="display: flex; gap: 10px;">
             <div style="flex: 1;">
-                <table class="border-all" style="font-size: 0.85em;">
+                <table class="border-all" style="font-size: 0.8em;">
                     <tr class="bg-black" style="font-weight: bold;"><td colspan="2" style="padding: 5px; text-align: center;">Consumo de Agua (m3)</td></tr>
                     <tr><td class="p-5 border-all">Lectura Anterior</td><td class="p-5 border-all text-right">{lectura_anterior:.0f}</td></tr>
                     <tr><td class="p-5 border-all">Lectura Actual</td><td class="p-5 border-all text-right">{lectura_actual:.0f}</td></tr>
@@ -187,7 +190,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
                 </table>
             </div>
             <div style="flex: 1;">
-                <table class="border-all" style="font-size: 0.85em;">
+                <table class="border-all" style="font-size: 0.8em;">
                     <tr class="bg-gray" style="font-weight: bold;"><td colspan="2" style="padding: 5px; text-align: center;">DEUDA</td></tr>
                     <tr><td class="p-5 border-all">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
                     <tr><td class="p-5 border-all">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>

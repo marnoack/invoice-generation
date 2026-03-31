@@ -180,7 +180,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         }
     </style>
     """
-   receipt_body = f"""
+    receipt_body = f"""
     <div class="receipt-container">
         <table class="header-table" style="border-radius: 5px 5px 0 0; overflow: hidden;">
             <tr>

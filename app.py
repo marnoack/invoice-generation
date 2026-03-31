@@ -173,11 +173,11 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
                 <td class="header-col text-center" style="width: 20%; border: 1px solid #eee;">
                     <img src="{logo_url}" class="logo-img" alt="Logo">
                 </td>
-                <td class="header-col text-center bg-steel" style="width: 55%; padding: 10px 0;">
-                    <h2 style="margin: 0; font-size: 1.1em; line-height: 1.2; color: white;">
+                <td class="header-col text-center" style="width: 55%; padding: 10px 0;">
+                    <h2 class="bg-steel" style="margin: 0; font-size: 1.1em; line-height: 1.2; color: white;">
                         JUNTA DE PROPIETARIOS<br>EDIFICIO LA FLORESTA 255
                     </h2>
-                    <p style="margin: 5px 0 0 0; font-weight: bold; color: rgba(255,255,255,0.9); font-size: 0.85em;">
+                    <p style="margin: 5px 0 0 0; font-weight: bold; background:#FFF"; color: #eee; font-size: 0.85em;">
                         Av. De La Floresta Nº 255
                     </p>
                 </td>

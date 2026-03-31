@@ -187,6 +187,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
                 </td>
             </tr>
         </table>
+        <div style="height: 15px;"></div>
         <p style="font-size: 0.9em;"><strong>Departamento:</strong> {dept} | <strong>Periodo:</strong> {selected_period}</p>
         <p style="font-size: 0.9em;"><strong>Propietario(s):</strong> {owner_list[0]}</p>
         {owners_html}

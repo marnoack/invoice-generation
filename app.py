@@ -15,8 +15,8 @@ SEWAGE_RATE = 1.43
 TOTAL_FIXED_FEE_BUILDING = 6.30
 TAX_RATE = 0.18 
 
-# Placeholder for the logo - you can update this URL
-LOGO_URL = "https://drive.google.com/drive/folders/1Zz8EtyEVxb2uNa9nJ2wjjkt8nC1LGTSh" 
+# URL for the logo
+logo_url = f"https://manos-vivas.com/wp-content/uploads/2026/03/gwm-logo.jpg"
 
 st.set_page_config(page_title="Calculadora de Recibo de Agua", page_icon="💧")
 
@@ -168,25 +168,26 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
 
     receipt_body = f"""
     <div class="receipt-container">
-        <table class="header-table" style="border-radius: 5px 5px 0 0;">
+        <table class="header-table" style="border-radius: 5px 5px 0 0; overflow: hidden;">
             <tr>
-                <td class="header-col text-center" style="width: 20%;">
-                    <img src="https://raw.githubusercontent.com/your-repo/assets/main/gwm-logo.jpg" class="logo-img" alt="Logo">
+                <td class="header-col text-center" style="width: 20%; border: 1px solid #eee;">
+                    <img src="{logo_url}" class="logo-img" alt="Logo">
                 </td>
-                <td class="header-col text-center bg-steel" style="width: 55%; padding: 15px 0;">
-                    <h2 style="margin: 0; font-size: 1.05em; line-height: 1.3; color: white; text-align: center;">
+                <td class="header-col text-center" style="width: 55%; padding: 10px 0;">
+                    <h2 class="bg-steel" style="margin: 0; font-size: 1.1em; line-height: 1.2; color: white;">
                         JUNTA DE PROPIETARIOS<br>EDIFICIO LA FLORESTA 255
                     </h2>
+                    <p style="margin: 5px 0 0 0; background:#FFF; color: #333; font-size: 0.8em;">
+                        Av. De La Floresta Nº 255, Surco
+                    </p>
                 </td>
-                <td class="header-col text-right invoice-info" style="width: 25%; padding-right: 15px;">
+                <td class="header-col text-right invoice-info" style="width: 25%; padding-right: 15px; border: 1px solid #eee;">
                     <strong>RECIBO N°</strong><br>{invoice_num}<br>
                     <strong>EMISIÓN</strong><br>{emission_date_str}
                 </td>
             </tr>
         </table>
-        <div class="text-center" style="padding: 5px; border-bottom: 2px solid #4682B4; margin-bottom: 15px;">
-            <p style="margin: 0; font-weight: bold; color: #333; font-size: 0.9em;">Av. De La Floresta Nº 255</p>
-        </div>
+        <div style="height: 15px;"></div>
         <p style="font-size: 0.9em;"><strong>Departamento:</strong> {dept} | <strong>Periodo:</strong> {selected_period}</p>
         <p style="font-size: 0.9em;"><strong>Propietario(s):</strong> {owner_list[0]}</p>
         {owners_html}

@@ -188,7 +188,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
                     <strong>EMISIÓN</strong><br>{emission_date_str}
                 </td>
             </tr>
-        </table>
+        </table>        
         <div style="height: 15px;"></div>      
         <table class="info-table" style="width: 100%; font-size: 0.9em; border-collapse: collapse;">
             <tr>

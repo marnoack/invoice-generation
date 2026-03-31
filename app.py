@@ -131,8 +131,8 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     total_to_pay = subtotal_neto + tax_amount + maintenance_fee
     
     invoice_num = f"{selected_period.replace(' ', '')}-{dept}"
-    owners_html = "".join([f"<p style='margin:0; padding-left:100px;'>{name}</p>" for name in owner_list[1:]])
-
+    #owners_html = "".join([f"<p style='margin:0; padding-left:100px;'>{name}</p>" for name in owner_list[1:]])
+    owners_html = "".join([f"<div style='margin:0; padding-left:100px;'>{name}</div>" for name in owner_list[1:]])
     # Note: Using textwrap.dedent logic or avoiding leading spaces is crucial for st.markdown
     receipt_styles = """
 <style>

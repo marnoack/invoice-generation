@@ -185,7 +185,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         <table class="header-table" style="border-radius: 5px 5px 0 0; overflow: hidden;">
             <tr>
                 <td class="header-col text-center" style="width: 20%; border: 1px solid #eee;">
-                    <img src={logo_url} class="logo-img" alt="Logo">
+                    <img src="{logo_url}" class="logo-img" alt="Logo">
                 </td>
                 <td class="header-col text-center bg-steel" style="width: 55%; padding: 10px 0;">
                     <h2 style="margin: 0; font-size: 1.1em; line-height: 1.2; color: white;">

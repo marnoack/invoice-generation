@@ -159,7 +159,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         .invoice-info { font-size: 0.85em; color: #333; line-height: 1.2; }
         .logo-img { max-height: 80px; width: auto; }
         .info-table td { vertical-align: top; padding: 2px 0; }
-        .user-code-box { border: 1px solid #333; text-align: center; padding: 5px; }      
+        .user-code-box { border: 1px solid #333; text-align: center; overflow: hidden; }
         @media print {
             body { margin: 0; padding: 0; }
             .receipt-container { border: none !important; width: 100%; max-width: 100%; page-break-after: always; padding: 10px;}
@@ -170,17 +170,17 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
 
     receipt_body = f"""
     <div class="receipt-container">
-        <table class="header-table" style="border-radius: 5px 5px 0 0; overflow: hidden;">
+            <table class="header-table" style="border-radius: 5px 5px 0 0; overflow: hidden;">
             <tr>
                 <td class="header-col text-center" style="width: 20%; border: 1px solid #eee;">
                     <img src="{logo_url}" class="logo-img" alt="Logo">
                 </td>
-                <td class="header-col text-center" style="width: 55%; padding: 10px 0;">
-                    <h2 class="bg-steel" style="margin: 0; font-size: 1.1em; line-height: 1.2; color: white;">
+                <td class="header-col text-center bg-steel" style="width: 55%; padding: 10px 0;">
+                    <h2 style="margin: 0; font-size: 1.1em; line-height: 1.2; color: white;">
                         JUNTA DE PROPIETARIOS<br>EDIFICIO LA FLORESTA 255
                     </h2>
-                    <p style="margin: 5px 0 0 0; background:#FFF; color: #333; font-size: 0.8em;">
-                        Av. De La Floresta Nº 255, Surco
+                    <p style="margin: 5px 0 0 0; font-weight: bold; color: rgba(255,255,255,0.9); font-size: 0.8em;">
+                        Av. De La Floresta Nº 255
                     </p>
                 </td>
                 <td class="header-col text-right invoice-info" style="width: 25%; padding-right: 15px; border: 1px solid #eee;">
@@ -188,8 +188,8 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
                     <strong>EMISIÓN</strong><br>{emission_date_str}
                 </td>
             </tr>
-        </table>        
-        <div style="height: 15px;"></div>      
+        </table>       
+        <div style="height: 15px;"></div>
         <table class="info-table" style="width: 100%; font-size: 0.9em; border-collapse: collapse;">
             <tr>
                 <td style="width: 75%;">
@@ -200,8 +200,11 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
                 </td>
                 <td style="width: 25%; vertical-align: middle;">
                     <div class="user-code-box">
-                        <div style="font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #333; margin-bottom: 4px; padding-bottom: 2px;">CÓDIGO DE USUARIO</div>
-                        <div style="font-weight: bold; font-size: 1.1em; letter-spacing: 1px;">FT{dept}</div>
+                        <div class="bg-steel" style="color: white; font-weight: bold; font-size: 0.75em; padding: 4px 0;">
+                            <div>CÓDIGO DE</div>
+                            <div>USUARIO</div>
+                        </div>
+                        <div style="font-weight: bold; font-size: 1.1em; letter-spacing: 1px; padding: 5px 0;">FT{dept}</div>
                     </div>
                 </td>
             </tr>

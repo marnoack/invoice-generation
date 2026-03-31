@@ -15,6 +15,9 @@ SEWAGE_RATE = 1.43
 TOTAL_FIXED_FEE_BUILDING = 6.30
 TAX_RATE = 0.18 
 
+# Placeholder for the logo - you can update this URL
+LOGO_URL = "https://drive.google.com/drive/folders/1Zz8EtyEVxb2uNa9nJ2wjjkt8nC1LGTSh" 
+
 st.set_page_config(page_title="Calculadora de Recibo de Agua", page_icon="💧")
 
 st.title("💧 Generador de Recibo de Dptos")
@@ -104,8 +107,8 @@ def get_sorted_periods(df_column):
 def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIENTS, OWNERS, BUDGETS):
     dept = str(row['Dpto'])
     own_consumption_m3 = float(row['Consumo']) / 100.0
-    lectura_anterior = float(row['Lectura Anterior'])
-    lectura_actual = float(row['Lectura Actual'])
+    lectura_anterior = float(row['Lectura Anterior']) / 100.0
+    lectura_actual = float(row['Lectura Actual'])  / 100.0
 
     coef = COEFFICIENTS.get(dept, 0.05)
     owner_list = OWNERS.get(dept, ["N/A"])
@@ -154,6 +157,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         .border-b { border-bottom: 1px solid #eee; }
         .border-all { border: 1px solid #ccc; }
         .invoice-info { font-size: 0.85em; color: #333; line-height: 1.2; }
+        .logo-img { max-height: 80px; width: auto; }
         @media print {
             body { margin: 0; padding: 0; }
             .receipt-container { border: none !important; width: 100%; max-width: 100%; page-break-after: always; padding: 10px;}
@@ -166,10 +170,10 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     <div class="receipt-container">
         <table class="header-table" style="border-radius: 5px 5px 0 0;">
             <tr>
-                <td class="header-col text-center" style="width: 25%;">
-                    <div style="color: #ccc; font-size: 0.7em;">[LOGO]</div>
+                <td class="header-col text-center" style="width: 20%;">
+                    <img src="https://raw.githubusercontent.com/your-repo/assets/main/gwm-logo.jpg" class="logo-img" alt="Logo">
                 </td>
-                <td class="header-col text-center bg-steel" style="width: 50%; padding: 15px 0;">
+                <td class="header-col text-center bg-steel" style="width: 55%; padding: 15px 0;">
                     <h2 style="margin: 0; font-size: 1.05em; line-height: 1.3; color: white; text-align: center;">
                         JUNTA DE PROPIETARIOS<br>EDIFICIO LA FLORESTA 255
                     </h2>
@@ -334,4 +338,4 @@ if not df.empty:
 else:
     st.error("No se pudo cargar la información de consumos.")
 
-st.caption("v2.6 - Batch Generation Enabled & Code Refactored")
+st.caption("v2.7")

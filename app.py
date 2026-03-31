@@ -168,9 +168,9 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
 
     receipt_body = f"""
     <div class="receipt-container">
-        <table class="header-table" style="border-radius: 5px 5px 0 0;">
+        <table class="header-table" style="border-radius: 5px 5px 0 0; overflow: hidden;">
             <tr>
-                <td class="header-col text-center" style="width: 20%;">
+                <td class="header-col text-center" style="width: 20%; border: 1px solid #eee;">
                     <img src="{logo_url}" class="logo-img" alt="Logo">
                 </td>
                 <td class="header-col text-center bg-steel" style="width: 55%; padding: 10px 0;">
@@ -181,12 +181,14 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
                         Av. De La Floresta Nº 255
                     </p>
                 </td>
-                <td class="header-col text-right invoice-info" style="width: 25%; padding-right: 15px;">
+                <td class="header-col text-right invoice-info" style="width: 25%; padding-right: 15px; border: 1px solid #eee;">
                     <strong>RECIBO N°</strong><br>{invoice_num}<br>
                     <strong>EMISIÓN</strong><br>{emission_date_str}
                 </td>
             </tr>
         </table>
+
+        
         <div class="text-center" style="padding: 5px; border-bottom: 2px solid #4682B4; margin-bottom: 15px;">
             <p style="margin: 0; font-weight: bold; color: #333; font-size: 0.9em;">Av. De La Floresta Nº 255</p>
         </div>

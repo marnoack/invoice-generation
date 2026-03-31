@@ -77,6 +77,29 @@ def load_data():
 def calculate_variable_cost(consumption):
     return (consumption * WATER_RATE) + (consumption * SEWAGE_RATE)
 
+def get_sorted_periods(df_column):
+    """Sorts periods by year desc and month desc using Spanish abbreviations."""
+    MONTH_MAP = {
+        "ENE": 1, "FEB": 2, "MAR": 3, "ABR": 4, "MAY": 5, "JUN": 6,
+        "JUL": 7, "AGO": 8, "SET": 9, "OCT": 10, "NOV": 11, "DIC": 12
+    }
+    
+    unique_periods = df_column.unique()
+    
+    def sort_key(period_str):
+        try:
+            parts = str(period_str).split()
+            if len(parts) == 2:
+                month_name = parts[0].upper()
+                year = int(parts[1])
+                month_num = MONTH_MAP.get(month_name, 0)
+                return (year, month_num)
+        except (ValueError, IndexError):
+            return (0, 0)
+        return (0, 0)
+
+    return sorted(unique_periods, key=sort_key, reverse=True)
+
 # Reusable receipt template logic
 def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIENTS, OWNERS, BUDGETS):
     dept = str(row['Dpto'])
@@ -209,7 +232,9 @@ BUDGETS = load_budget_info()
 SEDAPAL_READINGS = load_sedapal_info()
 
 if not df.empty:
-    periods = sorted(df['Mes'].unique(), reverse=True)
+    #periods = sorted(df['Mes'].unique(), reverse=True)
+     # Call the sorting function
+    periods = get_sorted_periods(df['Mes'])
     selected_period = st.selectbox("Periodo (Mes Año)", periods)
     main_meter_reading = SEDAPAL_READINGS.get(selected_period, 0.0)
     

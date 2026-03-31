@@ -15,9 +15,8 @@ SEWAGE_RATE = 1.43
 TOTAL_FIXED_FEE_BUILDING = 6.30
 TAX_RATE = 0.18 
 
-# Placeholder for the logo - you can update this URL
-FILE_ID = "128-xxKYi_GwI4MpT3Tr--fnl_pQ0MfQM"
-logo_url = f"https://drive.google.com/uc?export=view&id={FILE_ID}"
+# URL for the logo
+logo_url = f"https://manos-vivas.com/wp-content/uploads/2026/03/gwm-logo.jpg"
 
 st.set_page_config(page_title="Calculadora de Recibo de Agua", page_icon="💧")
 

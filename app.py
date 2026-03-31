@@ -16,9 +16,9 @@ TOTAL_FIXED_FEE_BUILDING = 6.30
 TAX_RATE = 0.18 
 
 # URL for the logo
-logo_url = f"https://manos-vivas.com/wp-content/uploads/2026/03/gwm-logo.jpg"
+logo_url = "https://manos-vivas.com/wp-content/uploads/2026/03/gwm-logo.jpg"
 
-st.set_page_config(page_title="Calculadora de Recibo de Agua", page_icon="💧")
+st.set_page_config(page_title="Calculadora de Recibo de Agua", page_icon="💧", layout="wide")
 
 st.title("💧 Generador de Recibo de Dptos")
 st.markdown("Cálculo de consumos individuales y áreas comunes.")
@@ -166,7 +166,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         .invoice-info { font-size: 0.85em; color: #333; line-height: 1.2; }
         .logo-img { max-height: 75px; width: auto; display: block; margin: 0 auto; }
         .info-table td { vertical-align: top; padding: 2px 0; }
-        .user-code-box { border: 1px solid #333; text-align: center; overflow: hidden; }
+        .user-code-box { border: 1px solid #333; text-align: center; overflow: hidden; border-radius: 4px; }
         @media print {
             body { margin: 0; padding: 0; }
             .receipt-container { 
@@ -270,8 +270,7 @@ BUDGETS = load_budget_info()
 SEDAPAL_READINGS = load_sedapal_info()
 
 if not df.empty:
-    #periods = sorted(df['Mes'].unique(), reverse=True)
-     # Call the sorting function
+    # Call the sorting function
     periods = get_sorted_periods(df['Mes'])
     selected_period = st.selectbox("Periodo (Mes Año)", periods)
     main_meter_reading = SEDAPAL_READINGS.get(selected_period, 0.0)
@@ -286,7 +285,6 @@ if not df.empty:
     common_area_consumption = max(0.0, main_meter_reading - total_apartments_consumption)
 
     depts_in_period = sorted(df_period['Dpto'].unique())
-    #options = ["RESUMEN EDIFICIO"] + depts_in_period
     options = ["RESUMEN EDIFICIO", "🚀 GENERAR TODO EL EDIFICIO (BATCH)"] + depts_in_period
     selected_dept = st.selectbox("Seleccione Departamento o Resumen", options)
 
@@ -372,4 +370,4 @@ if not df.empty:
 else:
     st.error("No se pudo cargar la información de consumos.")
 
-st.caption("v2.7")
+st.caption("v3.7")

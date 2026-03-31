@@ -158,8 +158,6 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         .border-all { border: 1px solid #ccc; }
         .invoice-info { font-size: 0.85em; color: #333; line-height: 1.2; }
         .logo-img { max-height: 80px; width: auto; }
-        .info-table td { vertical-align: top; padding: 2px 0; }
-        .user-code-box { border: 1px solid #333; text-align: center; padding: 5px; }      
         @media print {
             body { margin: 0; padding: 0; }
             .receipt-container { border: none !important; width: 100%; max-width: 100%; page-break-after: always; padding: 10px;}
@@ -189,24 +187,12 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
                 </td>
             </tr>
         </table>
-        <div style="height: 15px;"></div>      
-        <table class="info-table" style="width: 100%; font-size: 0.9em; border-collapse: collapse;">
-            <tr>
-                <td style="width: 75%;">
-                    <p style="margin:0;"><strong>Departamento:</strong> {dept} | <strong>Periodo:</strong> {selected_period}</p>
-                    <p style="margin:0;"><strong>Propietario(s):</strong> {owner_list[0]}</p>
-                    {owners_html}
-                    <p style="margin:0;"><strong>Coeficiente de Participación:</strong> {coef*100:.2f}%</p>
-                </td>
-                <td style="width: 25%; vertical-align: middle;">
-                    <div class="user-code-box">
-                        <div style="font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #333; margin-bottom: 4px; padding-bottom: 2px;">CÓDIGO DE USUARIO</div>
-                        <div style="font-weight: bold; font-size: 1.1em; letter-spacing: 1px;">FT{dept}</div>
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <hr style="margin: 10px 0;">
+        <div style="height: 15px;"></div>
+        <p style="font-size: 0.9em;"><strong>Departamento:</strong> {dept} | <strong>Periodo:</strong> {selected_period}</p>
+        <p style="font-size: 0.9em;"><strong>Propietario(s):</strong> {owner_list[0]}</p>
+        {owners_html}
+        <p><strong>Coeficiente de Participación:</strong> {coef*100:.2f}%</p>
+        <hr>
         <table style="font-size: 0.9em;">
             <tr class="bg-black"><td>PRESUPUESTO TOTAL DEL MES:</td><td class="text-right p-5">S/. {monthly_budget:.2f}</td></tr>
             <tr class="bg-black"><td colspan="2">CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</td></tr>
@@ -215,7 +201,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
             <tr><td class="p-5 border-b">Cuota Áreas Comunes y Fijo (inc. IGV):</td><td class="text-right p-5 border-b">S/. {common_cost_with_tax:.2f}</td></tr>
         </table>
         <br>
-        <table style="font-size: 0.9em;">
+        <table style="font-size: 0.95em;">
             <tr class="bg-steel" style="font-weight: bold;"><td class="p-8">CUOTA TOTAL DE MES:</td><td class="text-right p-8">S/. {total_to_pay:.2f}</td></tr>
             <tr class="bg-yellow" style="font-weight: bold;"><td class="p-8">FECHA DE VENCIMIENTO</td><td class="text-right p-8">{due_date_str}</td></tr>
         </table>

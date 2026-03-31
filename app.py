@@ -188,11 +188,26 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
             </tr>
         </table>
         <div style="height: 15px;"></div>
-        <p style="font-size: 0.9em;"><strong>Departamento:</strong> {dept} | <strong>Periodo:</strong> {selected_period}</p>
-        <p style="font-size: 0.9em;"><strong>Propietario(s):</strong> {owner_list[0]}</p>
-        {owners_html}
-        <p><strong>Coeficiente de Participación:</strong> {coef*100:.2f}%</p>
-        <hr>
+        
+        <table class="info-table" style="width: 100%; font-size: 0.9em; border-collapse: collapse;">
+            <tr>
+                <td style="width: 75%;">
+                    <div><strong>Departamento:</strong> {dept} | <strong>Periodo:</strong> {selected_period}</div>
+                    <div style="margin-top: 4px;"><strong>Propietario(s):</strong> {owner_list[0]}</div>
+                    {owners_html_list}
+                    <div style="margin-top: 4px;"><strong>Coeficiente de Participación:</strong> {coef*100:.2f}%</div>
+                </td>
+                <td style="width: 25%; vertical-align: middle;">
+                    <div class="user-code-box">
+                        <div style="font-weight: bold; font-size: 0.8em; border-bottom: 1px solid #333; margin-bottom: 4px; padding-bottom: 2px;">CÓDIGO DE USUARIO</div>
+                        <div style="font-weight: bold; font-size: 1.1em; letter-spacing: 1px;">FT{dept}</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <hr style="margin: 10px 0;">
+
         <table style="font-size: 0.9em;">
             <tr class="bg-black"><td>PRESUPUESTO TOTAL DEL MES:</td><td class="text-right p-5">S/. {monthly_budget:.2f}</td></tr>
             <tr class="bg-black"><td colspan="2">CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</td></tr>
@@ -201,7 +216,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
             <tr><td class="p-5 border-b">Cuota Áreas Comunes y Fijo (inc. IGV):</td><td class="text-right p-5 border-b">S/. {common_cost_with_tax:.2f}</td></tr>
         </table>
         <br>
-        <table style="font-size: 0.95em;">
+        <table style="font-size: 0.9em;">
             <tr class="bg-steel" style="font-weight: bold;"><td class="p-8">CUOTA TOTAL DE MES:</td><td class="text-right p-8">S/. {total_to_pay:.2f}</td></tr>
             <tr class="bg-yellow" style="font-weight: bold;"><td class="p-8">FECHA DE VENCIMIENTO</td><td class="text-right p-8">{due_date_str}</td></tr>
         </table>

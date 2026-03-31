@@ -16,7 +16,7 @@ TOTAL_FIXED_FEE_BUILDING = 6.30
 TAX_RATE = 0.18 
 
 # Placeholder for the logo - you can update this URL
-LOGO_URL = "https://drive.google.com/uc?export=view&id=128-xxKYi_GwI4MpT3Tr--fnl_pQ0MfQM" 
+LOGO_URL = "https://drive.google.com/drive/folders/1Zz8EtyEVxb2uNa9nJ2wjjkt8nC1LGTSh" 
 
 st.set_page_config(page_title="Calculadora de Recibo de Agua", page_icon="💧")
 
@@ -171,7 +171,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         <table class="header-table" style="border-radius: 5px 5px 0 0;">
             <tr>
                 <td class="header-col text-center" style="width: 20%;">
-                    <img src="https://drive.google.com/uc?export=view&id=128-xxKYi_GwI4MpT3Tr--fnl_pQ0MfQM" class="logo-img" alt="Logo">
+                    <img src="https://raw.githubusercontent.com/your-repo/assets/main/gwm-logo.jpg" class="logo-img" alt="Logo">
                 </td>
                 <td class="header-col text-center bg-steel" style="width: 55%; padding: 15px 0;">
                     <h2 style="margin: 0; font-size: 1.05em; line-height: 1.3; color: white; text-align: center;">

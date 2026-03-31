@@ -133,7 +133,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     invoice_num = f"{selected_period.replace(' ', '')}-{dept}"
     owners_html = "".join([f"<p style='margin:0; padding-left:100px;'>{name}</p>" for name in owner_list[1:]])
 
- receipt_styles = """
+    receipt_styles = """
     <style>
         .receipt-container { 
             font-family: Arial, sans-serif; 

@@ -268,18 +268,11 @@ if not df.empty:
     total_apartments_consumption = (df_period['Consumo'].astype(float).sum()) / 100.0
     common_area_consumption = max(0.0, main_meter_reading - total_apartments_consumption)
 
-    #depts_in_period = sorted(df_period['Dpto'].unique())
-    #options = ["RESUMEN EDIFICIO", "🚀 GENERAR TODO EL EDIFICIO (BATCH)"] + depts_in_period
-    #selected_dept = st.selectbox("Seleccione Departamento o Resumen", options)
-
-    # MOBILE FIX: Moved Emojis to the END of strings so dropdown is clickable on phones
-    opt_resumen = "RESUMEN EDIFICIO 🏢"
-    opt_batch = "GENERAR TODO EL EDIFICIO (BATCH) 🚀"
-    options = [opt_resumen, opt_batch] + sorted(df_period['Dpto'].unique())
+    depts_in_period = sorted(df_period['Dpto'].unique())
+    options = ["RESUMEN EDIFICIO", "🚀 GENERAR TODO EL EDIFICIO (BATCH)"] + depts_in_period
     selected_dept = st.selectbox("Seleccione Departamento o Resumen", options)
-    
-    #if selected_dept == "RESUMEN EDIFICIO":
-    if selected_dept == opt_resumen:
+
+    if selected_dept == "RESUMEN EDIFICIO":
         st.divider()
         st.subheader(f"🏢 Resumen Edificio - {selected_period}")
         c1, c2, c3 = st.columns(3)
@@ -287,9 +280,8 @@ if not df.empty:
         c2.metric("Suma Departamentos", f"{total_apartments_consumption:.2f} m³")
         c3.metric("Áreas Comunes", f"{common_area_consumption:.2f} m³")
         st.dataframe(df_period, use_container_width=True)
-
-    elif selected_dept == opt_batch:    
-    #elif selected_dept == "🚀 GENERAR TODO EL EDIFICIO (BATCH)":
+        
+    elif selected_dept == "🚀 GENERAR TODO EL EDIFICIO (BATCH)":
         st.divider()
         st.subheader(f"🚀 Generación Masiva - {selected_period}")
         

@@ -16,7 +16,7 @@ TOTAL_FIXED_FEE_BUILDING = 6.30
 TAX_RATE = 0.18 
 
 # URL for the logo
-logo_url = f"https://manos-vivas.com/wp-content/uploads/2026/03/gwm-logo.jpg"
+logo_url = "https://manos-vivas.com/wp-content/uploads/2026/03/gwm-logo.jpg"
 
 st.set_page_config(page_title="Calculadora de Recibo de Agua", page_icon="💧")
 
@@ -133,118 +133,119 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     invoice_num = f"{selected_period.replace(' ', '')}-{dept}"
     owners_html = "".join([f"<p style='margin:0; padding-left:100px;'>{name}</p>" for name in owner_list[1:]])
 
+    # Note: Using textwrap.dedent logic or avoiding leading spaces is crucial for st.markdown
     receipt_styles = """
-    <style>
-        .receipt-container { 
-            font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd; 
-            border-radius: 10px; background-color: white; margin-bottom: 30px;
-            max-width: 800px; /* Limits width to avoid overflow */
-            margin-left: auto; margin-right: auto; box-sizing: border-box;
-            -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; 
-        }
-        .header-table { width: 100%; border: none; margin-bottom: 0px; table-layout: fixed; }
-        .header-col { vertical-align: middle; }
-        .bg-blue { background-color: #00008b !important; color: white !important; }
-        .bg-black { background-color: #333 !important; color: white !important; }
-        .bg-steel { background-color: #4682B4 !important; color: white !important; }
-        .bg-yellow { background-color: #ffb300 !important; color: black !important; }
-        .bg-gray { background-color: #f2f2f2 !important; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
-        .text-right { text-align: right; }
-        .text-center { text-align: center; }
-        .p-5 { padding: 5px; }
-        .p-8 { padding: 8px; }
-        .border-b { border-bottom: 1px solid #eee; }
-        .border-all { border: 1px solid #ccc; }
-        .invoice-info { font-size: 0.85em; color: #333; line-height: 1.2; }
-        .logo-img { max-height: 80px; width: auto; }
-        .info-table td { vertical-align: top; padding: 2px 0; }
-        .user-code-box { border: 1px solid #333; text-align: center; overflow: hidden; }
-        @media print {
-            body { margin: 0; padding: 0; }
-            .receipt-container { border: none !important; width: 100%; max-width: 100%; page-break-after: always; padding: 10px;}
-            tr, td { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-        }
-    </style>
-    """
+<style>
+    .receipt-container { 
+        font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd; 
+        border-radius: 10px; background-color: white; margin-bottom: 30px;
+        max-width: 800px; 
+        margin-left: auto; margin-right: auto; box-sizing: border-box;
+        -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; 
+    }
+    .header-table { width: 100%; border: none; margin-bottom: 0px; table-layout: fixed; }
+    .header-col { vertical-align: middle; }
+    .bg-blue { background-color: #00008b !important; color: white !important; }
+    .bg-black { background-color: #333 !important; color: white !important; }
+    .bg-steel { background-color: #4682B4 !important; color: white !important; }
+    .bg-yellow { background-color: #ffb300 !important; color: black !important; }
+    .bg-gray { background-color: #f2f2f2 !important; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+    .text-right { text-align: right; }
+    .text-center { text-align: center; }
+    .p-5 { padding: 5px; }
+    .p-8 { padding: 8px; }
+    .border-b { border-bottom: 1px solid #eee; }
+    .border-all { border: 1px solid #ccc; }
+    .invoice-info { font-size: 0.85em; color: #333; line-height: 1.2; }
+    .logo-img { max-height: 80px; width: auto; }
+    .info-table td { vertical-align: top; padding: 2px 0; }
+    .user-code-box { border: 1px solid #333; text-align: center; overflow: hidden; }
+    @media print {
+        body { margin: 0; padding: 0; }
+        .receipt-container { border: none !important; width: 100%; max-width: 100%; page-break-after: always; padding: 10px;}
+        tr, td { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
+</style>
+"""
 
     receipt_body = f"""
-    <div class="receipt-container">
-            <table class="header-table" style="border-radius: 5px 5px 0 0; overflow: hidden;">
-            <tr>
-                <td class="header-col text-center" style="width: 20%; border: 1px solid #eee;">
-                    <img src="{logo_url}" class="logo-img" alt="Logo">
-                </td>
-                <td class="header-col text-center bg-steel" style="width: 55%; padding: 10px 0;">
-                    <h2 style="margin: 0; font-size: 1.1em; line-height: 1.2; color: white;">
-                        JUNTA DE PROPIETARIOS<br>EDIFICIO LA FLORESTA 255
-                    </h2>
-                    <p style="margin: 5px 0 0 0; font-weight: bold; color: rgba(255,255,255,0.9); font-size: 0.8em;">
-                        Av. De La Floresta Nº 255
-                    </p>
-                </td>
-                <td class="header-col text-right invoice-info" style="width: 25%; padding-right: 15px; border: 1px solid #eee;">
-                    <strong>RECIBO N°</strong><br>{invoice_num}<br>
-                    <strong>EMISIÓN</strong><br>{emission_date_str}
-                </td>
-            </tr>
-        </table>       
-        <div style="height: 15px;"></div>
-        <table class="info-table" style="width: 100%; font-size: 0.9em; border-collapse: collapse;">
-            <tr>
-                <td style="width: 75%;">
-                    <p style="margin:0;"><strong>Departamento:</strong> {dept} | <strong>Periodo:</strong> {selected_period}</p>
-                    <p style="margin:0;"><strong>Propietario(s):</strong> {owner_list[0]}</p>
-                    {owners_html}
-                    <p style="margin:0;"><strong>Coeficiente de Participación:</strong> {coef*100:.2f}%</p>
-                </td>
-                <td style="width: 25%; vertical-align: middle;">
-                    <div class="user-code-box">
-                        <div class="bg-steel" style="color: white; font-weight: bold; font-size: 0.75em; padding: 4px 0;">
-                            <div>CÓDIGO DE</div>
-                            <div>USUARIO</div>
-                        </div>
-                        <div style="font-weight: bold; font-size: 1.1em; letter-spacing: 1px; padding: 5px 0;">FT{dept}</div>
+<div class="receipt-container">
+    <table class="header-table" style="border-radius: 5px 5px 0 0; overflow: hidden;">
+        <tr>
+            <td class="header-col text-center" style="width: 20%; border: 1px solid #eee;">
+                <img src="{logo_url}" class="logo-img" alt="Logo">
+            </td>
+            <td class="header-col text-center bg-steel" style="width: 55%; padding: 10px 0;">
+                <h2 style="margin: 0; font-size: 1.1em; line-height: 1.2; color: white;">
+                    JUNTA DE PROPIETARIOS<br>EDIFICIO LA FLORESTA 255
+                </h2>
+                <p style="margin: 5px 0 0 0; font-weight: bold; color: rgba(255,255,255,0.9); font-size: 0.8em;">
+                    Av. De La Floresta Nº 255
+                </p>
+            </td>
+            <td class="header-col text-right invoice-info" style="width: 25%; padding-right: 15px; border: 1px solid #eee;">
+                <strong>RECIBO N°</strong><br>{invoice_num}<br><br>
+                <strong>EMISIÓN</strong><br>{emission_date_str}
+            </td>
+        </tr>
+    </table>       
+    <div style="height: 15px;"></div>
+    <table class="info-table" style="width: 100%; font-size: 0.9em; border-collapse: collapse;">
+        <tr>
+            <td style="width: 75%;">
+                <p style="margin:0;"><strong>Departamento:</strong> {dept} | <strong>Periodo:</strong> {selected_period}</p>
+                <p style="margin:0;"><strong>Propietario(s):</strong> {owner_list[0]}</p>
+                {owners_html}
+                <p style="margin:0;"><strong>Coeficiente de Participación:</strong> {coef*100:.2f}%</p>
+            </td>
+            <td style="width: 25%; vertical-align: middle;">
+                <div class="user-code-box">
+                    <div class="bg-steel" style="color: white; font-weight: bold; font-size: 0.75em; padding: 4px 0;">
+                        <div>CÓDIGO DE</div>
+                        <div>USUARIO</div>
                     </div>
-                </td>
-            </tr>
-        </table>
-        <hr style="margin: 10px 0;">
-        <table style="font-size: 0.9em;">
-            <tr class="bg-black"><td>PRESUPUESTO TOTAL DEL MES:</td><td class="text-right p-5">S/. {monthly_budget:.2f}</td></tr>
-            <tr class="bg-black"><td colspan="2">CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</td></tr>
-            <tr><td class="p-5 border-b">Cuota de mantenimiento:</td><td class="text-right p-5 border-b">S/. {maintenance_fee:.2f}</td></tr>
-            <tr><td class="p-5 border-b">Cuota de Consumo de Agua Propio:</td><td class="text-right p-5 border-b">S/. {own_cost:.2f}</td></tr>
-            <tr><td class="p-5 border-b">Cuota Áreas Comunes y Fijo (inc. IGV):</td><td class="text-right p-5 border-b">S/. {common_cost_with_tax:.2f}</td></tr>
-        </table>
-        <br>
-        <table style="font-size: 0.9em;">
-            <tr class="bg-steel" style="font-weight: bold;"><td class="p-8">CUOTA TOTAL DE MES:</td><td class="text-right p-8">S/. {total_to_pay:.2f}</td></tr>
-            <tr class="bg-yellow" style="font-weight: bold;"><td class="p-8">FECHA DE VENCIMIENTO</td><td class="text-right p-8">{due_date_str}</td></tr>
-        </table>
-        <br>
-        <div style="display: flex; gap: 10px;">
-            <div style="flex: 1;">
-                <table class="border-all" style="font-size: 0.8em;">
-                    <tr class="bg-black" style="font-weight: bold;"><td colspan="2" style="padding: 5px; text-align: center;">Consumo de Agua (m3)</td></tr>
-                    <tr><td class="p-5 border-all">Lectura Anterior</td><td class="p-5 border-all text-right">{lectura_anterior:.0f}</td></tr>
-                    <tr><td class="p-5 border-all">Lectura Actual</td><td class="p-5 border-all text-right">{lectura_actual:.0f}</td></tr>
-                    <tr><td class="p-5 border-all">Consumo Dpto.</td><td class="p-5 border-all text-right">{own_consumption_m3:.2f}</td></tr>
-                    <tr><td class="p-5 border-all">Consumo Común</td><td class="p-5 border-all text-right">{common_allocation_m3:.2f}</td></tr>
-                    <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-5 border-all">Total, m3</td><td class="p-5 border-all text-right">{total_billing_m3:.2f}</td></tr>
-                </table>
-            </div>
-            <div style="flex: 1;">
-                <table class="border-all" style="font-size: 0.8em;">
-                    <tr class="bg-gray" style="font-weight: bold;"><td colspan="2" style="padding: 5px; text-align: center;">DEUDA</td></tr>
-                    <tr><td class="p-5 border-all">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
-                    <tr><td class="p-5 border-all">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
-                    <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-5 border-all">Total Deuda</td><td class="p-5 border-all text-right">S/. 0.00</td></tr>
-                </table>
-            </div>
+                    <div style="font-weight: bold; font-size: 1.1em; letter-spacing: 1px; padding: 5px 0;">FT{dept}</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <hr style="margin: 10px 0;">
+    <table style="font-size: 0.9em;">
+        <tr class="bg-black"><td>PRESUPUESTO TOTAL DEL MES:</td><td class="text-right p-5">S/. {monthly_budget:.2f}</td></tr>
+        <tr class="bg-black"><td colspan="2">CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</td></tr>
+        <tr><td class="p-5 border-b">Cuota de mantenimiento:</td><td class="text-right p-5 border-b">S/. {maintenance_fee:.2f}</td></tr>
+        <tr><td class="p-5 border-b">Cuota de Consumo de Agua Propio:</td><td class="text-right p-5 border-b">S/. {own_cost:.2f}</td></tr>
+        <tr><td class="p-5 border-b">Cuota Áreas Comunes y Fijo (inc. IGV):</td><td class="text-right p-5 border-b">S/. {common_cost_with_tax:.2f}</td></tr>
+    </table>
+    <br>
+    <table style="font-size: 0.9em;">
+        <tr class="bg-steel" style="font-weight: bold;"><td class="p-8">CUOTA TOTAL DE MES:</td><td class="text-right p-8">S/. {total_to_pay:.2f}</td></tr>
+        <tr class="bg-yellow" style="font-weight: bold;"><td class="p-8">FECHA DE VENCIMIENTO</td><td class="text-right p-8">{due_date_str}</td></tr>
+    </table>
+    <br>
+    <div style="display: flex; gap: 10px;">
+        <div style="flex: 1;">
+            <table class="border-all" style="font-size: 0.8em;">
+                <tr class="bg-black" style="font-weight: bold;"><td colspan="2" style="padding: 5px; text-align: center;">Consumo de Agua (m3)</td></tr>
+                <tr><td class="p-5 border-all">Lectura Anterior</td><td class="p-5 border-all text-right">{lectura_anterior:.0f}</td></tr>
+                <tr><td class="p-5 border-all">Lectura Actual</td><td class="p-5 border-all text-right">{lectura_actual:.0f}</td></tr>
+                <tr><td class="p-5 border-all">Consumo Dpto.</td><td class="p-5 border-all text-right">{own_consumption_m3:.2f}</td></tr>
+                <tr><td class="p-5 border-all">Consumo Común</td><td class="p-5 border-all text-right">{common_allocation_m3:.2f}</td></tr>
+                <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-5 border-all">Total, m3</td><td class="p-5 border-all text-right">{total_billing_m3:.2f}</td></tr>
+            </table>
+        </div>
+        <div style="flex: 1;">
+            <table class="border-all" style="font-size: 0.8em;">
+                <tr class="bg-gray" style="font-weight: bold;"><td colspan="2" style="padding: 5px; text-align: center;">DEUDA</td></tr>
+                <tr><td class="p-5 border-all">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
+                <tr><td class="p-5 border-all">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
+                <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-5 border-all">Total Deuda</td><td class="p-5 border-all text-right">S/. 0.00</td></tr>
+            </table>
         </div>
     </div>
-    """
+</div>
+"""
     return receipt_styles, receipt_body, total_to_pay
     
 # --- MAIN LOGIC ---
@@ -254,8 +255,6 @@ BUDGETS = load_budget_info()
 SEDAPAL_READINGS = load_sedapal_info()
 
 if not df.empty:
-    #periods = sorted(df['Mes'].unique(), reverse=True)
-     # Call the sorting function
     periods = get_sorted_periods(df['Mes'])
     selected_period = st.selectbox("Periodo (Mes Año)", periods)
     main_meter_reading = SEDAPAL_READINGS.get(selected_period, 0.0)
@@ -270,7 +269,6 @@ if not df.empty:
     common_area_consumption = max(0.0, main_meter_reading - total_apartments_consumption)
 
     depts_in_period = sorted(df_period['Dpto'].unique())
-    #options = ["RESUMEN EDIFICIO"] + depts_in_period
     options = ["RESUMEN EDIFICIO", "🚀 GENERAR TODO EL EDIFICIO (BATCH)"] + depts_in_period
     selected_dept = st.selectbox("Seleccione Departamento o Resumen", options)
 
@@ -289,6 +287,7 @@ if not df.empty:
         
         batch_results = []
         full_html_content = ""
+        styles = ""
         
         for _, row in df_period.iterrows():
             styles, body, total = get_receipt_content(row, selected_period, common_area_consumption, COEFFICIENTS, OWNERS, BUDGETS)
@@ -328,6 +327,7 @@ if not df.empty:
                 m3.metric("Total a Pagar", f"S/. {total_to_pay:.2f}")
 
                 with st.expander("Ver detalle del recibo", expanded=True):
+                    # Ensure no leading indentation for the strings passed here
                     st.markdown(styles + body, unsafe_allow_html=True)
                     
                     if st.button("🖨️ Imprimir / Guardar PDF"):
@@ -356,4 +356,4 @@ if not df.empty:
 else:
     st.error("No se pudo cargar la información de consumos.")
 
-st.caption("v2.7")
+st.caption("v3.0 - Fixed HTML rendering in Canvas")

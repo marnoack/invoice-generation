@@ -159,7 +159,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         .invoice-info { font-size: 0.85em; color: #333; line-height: 1.2; }
         .logo-img { max-height: 80px; width: auto; }
         .info-table td { vertical-align: top; padding: 2px 0; }
-        .user-code-box { border: 1px solid #333; text-align: center; padding: 5px; }      
+        .user-code-box { border: 1px solid #333; text-align: center; overflow: hidden; }
         @media print {
             body { margin: 0; padding: 0; }
             .receipt-container { border: none !important; width: 100%; max-width: 100%; page-break-after: always; padding: 10px;}

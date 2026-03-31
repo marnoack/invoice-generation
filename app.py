@@ -173,10 +173,13 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
                 <td class="header-col text-center" style="width: 20%;">
                     <img src="{logo_url}" class="logo-img" alt="Logo">
                 </td>
-                <td class="header-col text-center bg-steel" style="width: 55%; padding: 15px 0;">
-                    <h2 style="margin: 0; font-size: 1.05em; line-height: 1.3; color: white; text-align: center;">
+                <td class="header-col text-center bg-steel" style="width: 55%; padding: 10px 0;">
+                    <h2 style="margin: 0; font-size: 1.1em; line-height: 1.2; color: white;">
                         JUNTA DE PROPIETARIOS<br>EDIFICIO LA FLORESTA 255
                     </h2>
+                    <p style="margin: 5px 0 0 0; font-weight: bold; color: rgba(255,255,255,0.9); font-size: 0.85em;">
+                        Av. De La Floresta Nº 255
+                    </p>
                 </td>
                 <td class="header-col text-right invoice-info" style="width: 25%; padding-right: 15px;">
                     <strong>RECIBO N°</strong><br>{invoice_num}<br>

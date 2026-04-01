@@ -288,7 +288,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         "Alcantarillado Común (S/.)": round(sewage_cost_common, 2),
         "Cargo Fijo (S/.)": round(indiv_fixed_fee, 2),
         "IGV (S/.)": round(tax_comunes, 2),
-        "Total Común": round(total_comunes_csv, 2)
+        "Total Común": round(total_comunes_csv, 2),
         "Agua Propio (S/.)": round(own_water_cost, 2),
         "Alcantarillado Propio (S/.)": round(own_sewage_cost, 2),
         "IGV (S/.)": round(tax_propio, 2),

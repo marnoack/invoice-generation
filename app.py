@@ -130,8 +130,8 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     individual_fixed_fee = TOTAL_FIXED_FEE_BUILDING * coef
     
     # Calculations with other variables for now to not screw the current code
-    water_cost = own_consumption_m3 * WATER_RATE
-    sewage_cost = own_consumption_m3 * SEWAGE_RATE
+    water_cost_common = common_allocation_m3 * WATER_RATE
+    sewage_cost_common = common_allocation_m3 * SEWAGE_RATE
     indiv_fixed_fee = TOTAL_FIXED_FEE_BUILDING * coef
     
     common_cost_with_tax = (common_cost + individual_fixed_fee) * (1 + TAX_RATE)
@@ -268,14 +268,19 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     </div>
 </div>
 """
+    # --- LÓGICA DE DATOS PARA CSV ---
+    # Fórmula solicitada: water_cost_common + sewage_cost_common + indiv_fixed_fee + tax
+    subtotal_comunes = water_cost_common + sewage_cost_common + indiv_fixed_fee
+    tax_comunes = subtotal_comunes * TAX_RATE
+    total_comunes_csv = subtotal_comunes + tax_comunes
     # CSV Data generation for batch reporting
     csv_data = {
         "Dpto": dept,
-        "Water Cost (S/.)": round(water_cost, 2),
-        "Sewage Cost (S/.)": round(sewage_cost, 2),
-        "Fixed Rate (S/.)": round(indiv_fixed_fee, 2),
-        "Tax (S/.)": round(tax_amount, 2),
-        "Grand Total": round(total_to_pay, 2)
+        "Costo de Agua (S/.)": round(water_cost_common, 2),
+        "Costo de Alcantarillado (S/.)": round(sewage_cost_common, 2),
+        "Cargo Fijo (S/.)": round(indiv_fixed_fee, 2),
+        "IGV (S/.)": round(tax_comunes, 2),
+        "Total": round(total_comunes_csv, 2)
     }
     
     return receipt_styles, receipt_body, total_to_pay, csv_data

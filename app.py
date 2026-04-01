@@ -373,7 +373,7 @@ if not df.empty:
         if not filtered_df.empty:
             try:
                 row = filtered_df.iloc[0]
-                styles, body, total_to_pay = get_receipt_content(row, selected_period, common_area_consumption, COEFFICIENTS, OWNERS, BUDGETS)
+                styles, body, total_to_pay, _ = get_receipt_content(row, selected_period, common_area_consumption, COEFFICIENTS, OWNERS, BUDGETS)
                 
                 st.divider()
                 m1, m2, m3 = st.columns(3)

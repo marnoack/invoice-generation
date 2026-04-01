@@ -126,8 +126,8 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     common_allocation_m3 = common_area_consumption * coef
     
     own_cost = calculate_variable_cost(own_consumption_m3)
-    own_water_cost = consumption * WATER_RATE
-    own_sewage_cost = consumption * SEWAGE_RATE
+    own_water_cost = own_consumption_m3 * WATER_RATE
+    own_sewage_cost = own_consumption_m3 * SEWAGE_RATE
     
     common_cost = calculate_variable_cost(common_allocation_m3)
     individual_fixed_fee = TOTAL_FIXED_FEE_BUILDING * coef

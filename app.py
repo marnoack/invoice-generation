@@ -292,7 +292,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         "Agua Propio (S/.)": round(own_water_cost, 2),
         "Alcantarillado Propio (S/.)": round(own_sewage_cost, 2),
         "IGV (S/.)": round(tax_propio, 2),
-        "Total Propio": round(total_propio_csv, 2)
+        "Total Propio": round(total_propio_csv, 2),
         "Total": round(grand_total, 2)
     }
     

@@ -126,6 +126,9 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     common_allocation_m3 = common_area_consumption * coef
     
     own_cost = calculate_variable_cost(own_consumption_m3)
+    own_water_cost = consumption * WATER_RATE
+    own_sewage_cost = consumption * SEWAGE_RATE
+    
     common_cost = calculate_variable_cost(common_allocation_m3)
     individual_fixed_fee = TOTAL_FIXED_FEE_BUILDING * coef
     
@@ -273,14 +276,24 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     subtotal_comunes = water_cost_common + sewage_cost_common + indiv_fixed_fee
     tax_comunes = subtotal_comunes * TAX_RATE
     total_comunes_csv = subtotal_comunes + tax_comunes
+    subtotal_propio = own_water_cost + own_sewage_cost
+    tax_propio = subtotal_propio * TAX_RATE
+    total_propio_csv = subtotal_propio + tax_propio
+    grand_total = total_comunes_csv + total_propio_csv
+    
     # CSV Data generation for batch reporting
     csv_data = {
         "Dpto": dept,
-        "Costo de Agua (S/.)": round(water_cost_common, 2),
-        "Costo de Alcantarillado (S/.)": round(sewage_cost_common, 2),
+        "Agua Común (S/.)": round(water_cost_common, 2),
+        "Alcantarillado Común (S/.)": round(sewage_cost_common, 2),
         "Cargo Fijo (S/.)": round(indiv_fixed_fee, 2),
         "IGV (S/.)": round(tax_comunes, 2),
-        "Total": round(total_comunes_csv, 2)
+        "Total Común": round(total_comunes_csv, 2)
+        "Agua Propio (S/.)": round(own_water_cost, 2),
+        "Alcantarillado Propio (S/.)": round(own_sewage_cost, 2),
+        "IGV (S/.)": round(tax_propio, 2),
+        "Total Propio": round(total_propio_csv, 2)
+        "Total": round(grand_total, 2)
     }
     
     return receipt_styles, receipt_body, total_to_pay, csv_data

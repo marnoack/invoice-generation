@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 from datetime import datetime, timedelta
+import io
 
 # --- DATE CALCULATION ---
 current_date = datetime.now()
@@ -262,6 +263,16 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     </div>
 </div>
 """
+    # CSV Data generation for batch reporting
+    csv_data = {
+        "Dpto": dept,
+        "Water Cost (S/.)": round(water_cost, 2),
+        "Sewage Cost (S/.)": round(sewage_cost, 2),
+        "Fixed Rate (S/.)": round(indiv_fixed_fee, 2),
+        "Tax (S/.)": round(tax_amount, 2),
+        "Grand Total": round(total_to_pay, 2)
+    }
+    
     return receipt_styles, receipt_body, total_to_pay
     
 # --- MAIN LOGIC ---
@@ -310,33 +321,48 @@ if not df.empty:
         st.subheader(f"🚀 Generación Masiva - {selected_period}")
         
         batch_results = []
+        csv_rows = []
         full_html_content = ""
         styles = ""
         
         for _, row in df_period.iterrows():
-            styles, body, total = get_receipt_content(row, selected_period, common_area_consumption, COEFFICIENTS, OWNERS, BUDGETS)
+            styles, body, total, c_row = get_receipt_content(row, selected_period, common_area_consumption, COEFFICIENTS, OWNERS, BUDGETS)
             batch_results.append({"Dpto": row['Dpto'], "Total a Pagar": f"S/. {total:.2f}"})
             full_html_content += body
+            csv_rows.append(c_row)
 
         st.table(pd.DataFrame(batch_results))
-        
-        if st.button("🖨️ Imprimir Todos los Recibos"):
-            escaped_full_body = (styles + full_html_content).replace("`", "\\`").replace("${", "\\${")
-            st.components.v1.html(f"""
-                <script>
-                const win = window.open('', '', 'height=700,width=900');
-                win.document.write('<html><head><title>Recibos Edificio {selected_period}</title>');
-                win.document.write('</head><body>');
-                win.document.write(`{escaped_full_body}`);
-                win.document.write('</body></html>');
-                win.document.close();
-                win.setTimeout(function() {{
-                    win.focus();
-                    win.print();
-                    win.close();
-                }}, 1000);
-                </script>
-            """, height=0)    
+
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("🖨️ Imprimir Todos los Recibos"):
+                escaped_full_body = (styles + full_html_content).replace("`", "\\`").replace("${", "\\${")
+                st.components.v1.html(f"""
+                    <script>
+                    const win = window.open('', '', 'height=700,width=900');
+                    win.document.write('<html><head><title>Recibos Edificio {selected_period}</title>');
+                    win.document.write('</head><body>');
+                    win.document.write(`{escaped_full_body}`);
+                    win.document.write('</body></html>');
+                    win.document.close();
+                    win.setTimeout(function() {{
+                        win.focus();
+                        win.print();
+                        win.close();
+                    }}, 1000);
+                    </script>
+                """, height=0)    
+        with col2:
+            report_df = pd.DataFrame(csv_rows)
+            csv_buffer = io.StringIO()
+            report_df.to_csv(csv_buffer, index=False)
+            st.download_button(
+                label="📥 Descargar Reporte CSV de Agua",
+                data=csv_buffer.getvalue(),
+                file_name=f"Reporte_Agua_{selected_period.replace(' ', '_')}.csv",
+                mime="text/csv"
+            )
+            
     else:
         filtered_df = df_period[df_period['Dpto'] == selected_dept]
         if not filtered_df.empty:

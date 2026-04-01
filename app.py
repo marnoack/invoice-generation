@@ -128,6 +128,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     own_cost = calculate_variable_cost(own_consumption_m3)
     own_water_cost = own_consumption_m3 * WATER_RATE
     own_sewage_cost = own_consumption_m3 * SEWAGE_RATE
+    own_cost_with_tax = (own_water_cost + own_sewage_cost) * (1 + TAX_RATE)
     
     common_cost = calculate_variable_cost(common_allocation_m3)
     individual_fixed_fee = TOTAL_FIXED_FEE_BUILDING * coef
@@ -147,7 +148,9 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
 
     subtotal_neto = variable_cost + individual_fixed_fee
     tax_amount = subtotal_neto * TAX_RATE
-    total_to_pay = subtotal_neto + tax_amount + maintenance_fee
+    
+    #total_to_pay = subtotal_neto + tax_amount + maintenance_fee
+    total_to_pay =  common_cost_with_tax+ own_cost_with_tax + maintenance_fee
     
     invoice_num = f"{selected_period.replace(' ', '')}-{dept}"
 
@@ -240,7 +243,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         <tr class="bg-black"><td>PRESUPUESTO TOTAL DEL MES:</td><td class="text-right p-5">S/. {monthly_budget:.2f}</td></tr>
         <tr class="bg-black"><td colspan="2">CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</td></tr>
         <tr><td class="p-5 border-b">Cuota de mantenimiento:</td><td class="text-right p-5 border-b">S/. {maintenance_fee:.2f}</td></tr>
-        <tr><td class="p-5 border-b">Cuota de Consumo de Agua Propio:</td><td class="text-right p-5 border-b">S/. {own_cost:.2f}</td></tr>
+        <tr><td class="p-5 border-b">Cuota de Consumo de Agua Propio:</td><td class="text-right p-5 border-b">S/. {own_cost_with_tax:.2f}</td></tr>
         <tr><td class="p-5 border-b">Cuota Áreas Comunes y Fijo (inc. IGV):</td><td class="text-right p-5 border-b">S/. {common_cost_with_tax:.2f}</td></tr>
     </table>
     <br>

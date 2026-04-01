@@ -273,7 +273,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         "Grand Total": round(total_to_pay, 2)
     }
     
-    return receipt_styles, receipt_body, total_to_pay
+    return receipt_styles, receipt_body, total_to_pay, csv_row_data
     
 # --- MAIN LOGIC ---
 df = load_data()

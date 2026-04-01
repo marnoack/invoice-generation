@@ -10,9 +10,9 @@ due_date = current_date + timedelta(days=10)
 due_date_str = due_date.strftime("%d/%m/%Y")
 
 # --- CONFIGURATION ---
-WATER_RATE = 2.29
-SEWAGE_RATE = 1.43
-TOTAL_FIXED_FEE_BUILDING = 6.30
+#WATER_RATE = 2.29
+#SEWAGE_RATE = 1.43
+#TOTAL_FIXED_FEE_BUILDING = 6.30
 TAX_RATE = 0.18 
 
 # URL for the logo
@@ -61,7 +61,17 @@ def load_sedapal_info():
     try:
         df_sedapal = conn.read(worksheet="Sedapal", ttl="0")
         if df_sedapal is not None and not df_sedapal.empty:
-            return pd.Series(df_sedapal['Total m3'].values, index=df_sedapal['Mes']).to_dict()
+            # Create a dictionary mapping the Month key to its rates and readings
+            sedapal_dict = {}
+            for _, row in df_sedapal.iterrows():
+                mes_key = str(row['Mes']).strip()
+                sedapal_dict[mes_key] = {
+                    'total_m3': row['Total m3'],
+                    'water_rate': row['Agua Costo/m3 S/.'],
+                    'sewage_rate': row['Alcantarillado costo/m3 S/.'],
+                    'fixed_fee': row['Cargo Fijo']
+                }
+            return sedapal_dict
     except Exception as e:
         st.sidebar.error(f"Error cargando Sedapal: {e}")
     return {}
@@ -263,7 +273,15 @@ SEDAPAL_READINGS = load_sedapal_info()
 if not df.empty:
     periods = get_sorted_periods(df['Mes'])
     selected_period = st.selectbox("Periodo (Mes Año)", periods)
-    main_meter_reading = SEDAPAL_READINGS.get(selected_period, 0.0)
+
+    # --- UPDATE GLOBAL RATES BASED ON SELECTED PERIOD ---
+    period_data = SEDAPAL_READINGS.get(selected_period, {})
+    main_meter_reading = period_data.get('total_m3', 0.0)
+    WATER_RATE = period_data.get('water_rate', 2.29)
+    SEWAGE_RATE = period_data.get('sewage_rate', 1.43)
+    TOTAL_FIXED_FEE_BUILDING = period_data.get('fixed_fee', 6.30)
+    
+    #main_meter_reading = SEDAPAL_READINGS.get(selected_period, 0.0)
     
     if main_meter_reading == 0.0:
         st.warning(f"No se encontró lectura en la hoja 'Sedapal' para el periodo {selected_period}.")

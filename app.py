@@ -178,14 +178,15 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     .bg-steel { background-color: #244163 !important; color: white !important; }
     .bg-yellow { background-color: #ffb300 !important; color: black !important; }
     .bg-gray { background-color: #f2f2f2 !important; }
-    table { width: 100%; border-collapse: collapse; margin-bottom: 0px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 0px; !important}
     .text-right { text-align: right; }
     .text-center { text-align: center; }
     .p-5 { padding: 5px; }
     .p-8 { padding: 8px; }
     .border-b { border-bottom: 1px solid #eee; }
-    .border-b-black { border-bottom: 1px solid #000; }
+    .border-b-black { border-bottom: 1px solid #000 !important; }
     .border-tb-white { border-bottom: 1px solid #FFF !important; border-top: 1px solid #FFF !important; }
+    .border-tb-black { border-bottom: 1px solid #000 !important; border-top: 1px solid #000 !important; }
     .border-all { border: 1px solid #ccc; }
     .invoice-info { font-size: 0.85em; color: #333; line-height: 1.2; }
     .logo-img { max-height: 80px; width: auto; }
@@ -242,7 +243,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     </table>
     <hr style="margin: 10px 0;">
     <table style="font-size: 0.9em;">
-        <tr class="bg-black"><td class="border-tb-white">PRESUPUESTO TOTAL DEL MES:</td><td class="class="border-tb-white" text-right p-5">S/. {monthly_budget:.2f}</td></tr>
+        <tr class="bg-black"><td class="border-tb-white">PRESUPUESTO TOTAL DEL MES:</td><td class="border-tb-white" text-right p-5">S/. {monthly_budget:.2f}</td></tr>
         <tr class="bg-black"><td class="border-tb-white" colspan="2">CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</td></tr>
         <tr><td class="p-5 border-b">Cuota de mantenimiento:</td><td class="text-right p-5 border-b">S/. {maintenance_fee:.2f}</td></tr>
         <tr><td class="p-5 border-b">Cuota de Consumo de Agua Propio:</td><td class="text-right p-5 border-b">S/. {own_cost_with_tax:.2f}</td></tr>

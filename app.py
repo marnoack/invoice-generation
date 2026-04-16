@@ -225,10 +225,12 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     <table class="info-table" style="width: 100%; font-size: 0.9em; border-collapse: collapse;">
         <tr>
             <td style="width: 75%;">
-            <p style="margin:0;"><strong>Departamento:</strong> {dept} | <strong>Periodo:</strong> {selected_period}</p>
-            <p style="margin:0;"><strong>Propietario(s):</strong> {owner_list[0]}</p>
-            {owners_html}
-            <p style="margin:0;"><strong>Coeficiente de Participación:</strong> {coef*100:.2f}%</p>
+               <div class="user-code-box">
+                  <p style="margin:0;"><strong>Departamento:</strong> {dept} | <strong>Periodo:</strong> {selected_period}</p>
+                  <p style="margin:0;"><strong>Propietario(s):</strong> {owner_list[0]}</p>
+                  {owners_html}
+                  <p style="margin:0;"><strong>Coeficiente de Participación:</strong> {coef*100:.2f}%</p>
+               </div>
             </td>
             <td style="width: 25%; vertical-align: middle;">
                 <div class="user-code-box">
@@ -241,7 +243,6 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
             </td>
         </tr>
     </table>
-    <hr style="margin: 10px 0;">
     <table style="font-size: 0.9em;">
         <tr class="bg-black"><td class="border-tb-white">PRESUPUESTO TOTAL DEL MES:</td><td class="border-tb-white" text-right p-5">S/. {monthly_budget:.2f}</td></tr>
         <tr class="bg-black"><td class="border-tb-white" colspan="2">CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</td></tr>
@@ -258,9 +259,9 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
             <table class="border-all" style="font-size: 0.8em;">
                 <tr class="bg-black" style="font-weight: bold;"><td colspan="2" style="padding: 5px; text-align: center;">Consumo de Agua, Metros Cúbicos</td></tr>
                 <tr><td class="p-5 border-all">Lectura Anterior</td><td class="p-5 border-all text-right">{lectura_anterior:.0f}</td></tr>
-                <tr><td class="p-5 border-b-black border-all">Lectura Actual</td><td class="p-5 border-all text-right">{lectura_actual:.0f}</td></tr>
+                <tr><td class="p-5 border-b-black border-all">Lectura Actual</td><td class="p-5  border-b-black border-all text-right">{lectura_actual:.0f}</td></tr>
                 <tr><td class="p-5 border-all ">Consumo Dpto.</td><td class="p-5 border-all text-right">{own_consumption_m3:.2f}</td></tr>
-                <tr><td class="p-5 border-all border-b-black">Consumo Común</td><td class="p-5 border-all text-right">{common_allocation_m3:.2f}</td></tr>
+                <tr><td class="p-5 border-all border-b-black">Consumo Común</td><td class="p-5 border-all border-b-black text-right">{common_allocation_m3:.2f}</td></tr>
                 <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-5 border-all">Consumo Total, m3</td><td class="p-5 border-all text-right">{total_billing_m3:.2f}</td></tr>
             </table>
         </div>

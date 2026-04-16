@@ -123,7 +123,7 @@ def get_sorted_periods(df_column):
 
     return sorted(unique_periods, key=sort_key, reverse=True)
     
- def calculate_extraordinary_fee(selected_period, dept_coef, df_extra):
+def calculate_extraordinary_fee(selected_period, dept_coef, df_extra):
     """
     Busca en toda la hoja la cuota que coincida con el periodo seleccionado,
     sin importar el orden de las filas.

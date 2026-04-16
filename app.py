@@ -185,7 +185,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     .p-8 { padding: 8px; }
     .border-b { border-bottom: 1px solid #eee; }
     .border-b-black { border-bottom: 1px solid #000; }
-    .border-b-white { border-bottom: 1px solid #FFF; }
+    .border-tb-white { border-bottom: 1px solid #FFF !important; border-top: 1px solid #FFF !important; }
     .border-all { border: 1px solid #ccc; }
     .invoice-info { font-size: 0.85em; color: #333; line-height: 1.2; }
     .logo-img { max-height: 80px; width: auto; }
@@ -242,8 +242,8 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     </table>
     <hr style="margin: 10px 0;">
     <table style="font-size: 0.9em;">
-        <tr class="bg-black border-b-white"><td>PRESUPUESTO TOTAL DEL MES:</td><td class="text-right p-5">S/. {monthly_budget:.2f}</td></tr>
-        <tr class="bg-black"><td colspan="2">CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</td></tr>
+        <tr class="bg-black border-tb-white"><td>PRESUPUESTO TOTAL DEL MES:</td><td class="text-right p-5">S/. {monthly_budget:.2f}</td></tr>
+        <tr class="bg-black border-tb-white"><td colspan="2">CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</td></tr>
         <tr><td class="p-5 border-b">Cuota de mantenimiento:</td><td class="text-right p-5 border-b">S/. {maintenance_fee:.2f}</td></tr>
         <tr><td class="p-5 border-b">Cuota de Consumo de Agua Propio:</td><td class="text-right p-5 border-b">S/. {own_cost_with_tax:.2f}</td></tr>
         <tr><td class="p-5 border-b">Cuota Áreas Comunes y Fijo (inc. IGV):</td><td class="text-right p-5 border-b">S/. {common_cost_with_tax:.2f}</td></tr>

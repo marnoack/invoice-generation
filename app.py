@@ -178,13 +178,14 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     .bg-steel { background-color: #244163 !important; color: white !important; }
     .bg-yellow { background-color: #ffb300 !important; color: black !important; }
     .bg-gray { background-color: #f2f2f2 !important; }
-    table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 0px; }
     .text-right { text-align: right; }
     .text-center { text-align: center; }
     .p-5 { padding: 5px; }
     .p-8 { padding: 8px; }
     .border-b { border-bottom: 1px solid #eee; }
-    .border-b-b { border-bottom: 1px solid #000; }
+    .border-b-black { border-bottom: 1px solid #000; }
+    .border-b-white { border-bottom: 1px solid #FFF; }
     .border-all { border: 1px solid #ccc; }
     .invoice-info { font-size: 0.85em; color: #333; line-height: 1.2; }
     .logo-img { max-height: 80px; width: auto; }
@@ -241,26 +242,24 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     </table>
     <hr style="margin: 10px 0;">
     <table style="font-size: 0.9em;">
-        <tr class="bg-black"><td>PRESUPUESTO TOTAL DEL MES:</td><td class="text-right p-5">S/. {monthly_budget:.2f}</td></tr>
+        <tr class="bg-black border-b-white"><td>PRESUPUESTO TOTAL DEL MES:</td><td class="text-right p-5">S/. {monthly_budget:.2f}</td></tr>
         <tr class="bg-black"><td colspan="2">CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</td></tr>
         <tr><td class="p-5 border-b">Cuota de mantenimiento:</td><td class="text-right p-5 border-b">S/. {maintenance_fee:.2f}</td></tr>
         <tr><td class="p-5 border-b">Cuota de Consumo de Agua Propio:</td><td class="text-right p-5 border-b">S/. {own_cost_with_tax:.2f}</td></tr>
         <tr><td class="p-5 border-b">Cuota Áreas Comunes y Fijo (inc. IGV):</td><td class="text-right p-5 border-b">S/. {common_cost_with_tax:.2f}</td></tr>
     </table>
-    <br>
     <table style="font-size: 0.9em;">
         <tr class="bg-steel" style="font-weight: bold;"><td class="p-8">CUOTA TOTAL DE MES:</td><td class="text-right p-8">S/. {total_to_pay:.2f}</td></tr>
         <tr class="bg-yellow" style="font-weight: bold;"><td class="p-8">FECHA DE VENCIMIENTO</td><td class="text-right p-8">{due_date_str}</td></tr>
     </table>
-    <br>
     <div style="display: flex; gap: 1px;">
         <div style="flex: 1;">
             <table class="border-all" style="font-size: 0.8em;">
                 <tr class="bg-black" style="font-weight: bold;"><td colspan="2" style="padding: 5px; text-align: center;">Consumo de Agua, Metros Cúbicos</td></tr>
                 <tr><td class="p-5 border-all">Lectura Anterior</td><td class="p-5 border-all text-right">{lectura_anterior:.0f}</td></tr>
-                <tr class="border-b-b"><td class="p-5 border-all">Lectura Actual</td><td class="p-5 border-all text-right">{lectura_actual:.0f}</td></tr>
+                <tr class="border-b-black"><td class="p-5 border-all">Lectura Actual</td><td class="p-5 border-all text-right">{lectura_actual:.0f}</td></tr>
                 <tr><td class="p-5 border-all">Consumo Dpto.</td><td class="p-5 border-all text-right">{own_consumption_m3:.2f}</td></tr>
-                <tr class="border-b-b"><td class="p-5 border-all">Consumo Común</td><td class="p-5 border-all text-right">{common_allocation_m3:.2f}</td></tr>
+                <tr class="border-b-black"><td class="p-5 border-all">Consumo Común</td><td class="p-5 border-all text-right">{common_allocation_m3:.2f}</td></tr>
                 <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-5 border-all">Consumo Total, m3</td><td class="p-5 border-all text-right">{total_billing_m3:.2f}</td></tr>
             </table>
         </div>

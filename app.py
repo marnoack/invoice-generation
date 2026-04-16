@@ -175,7 +175,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     .header-col { vertical-align: middle; }
     .bg-blue { background-color: #00008b !important; color: white !important; }
     .bg-black { background-color: #333 !important; color: white !important; }
-    .bg-steel { background-color: #4682B4 !important; color: white !important; }
+    .bg-steel { background-color: #244163 !important; color: white !important; }
     .bg-yellow { background-color: #ffb300 !important; color: black !important; }
     .bg-gray { background-color: #f2f2f2 !important; }
     table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
@@ -184,6 +184,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     .p-5 { padding: 5px; }
     .p-8 { padding: 8px; }
     .border-b { border-bottom: 1px solid #eee; }
+    .border-b-b { border-bottom: 1px solid #000; }
     .border-all { border: 1px solid #ccc; }
     .invoice-info { font-size: 0.85em; color: #333; line-height: 1.2; }
     .logo-img { max-height: 80px; width: auto; }
@@ -252,32 +253,33 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         <tr class="bg-yellow" style="font-weight: bold;"><td class="p-8">FECHA DE VENCIMIENTO</td><td class="text-right p-8">{due_date_str}</td></tr>
     </table>
     <br>
-    <div style="display: flex; gap: 10px;">
+    <div style="display: flex; gap: 1px;">
         <div style="flex: 1;">
             <table class="border-all" style="font-size: 0.8em;">
-                <tr class="bg-black" style="font-weight: bold;"><td colspan="2" style="padding: 5px; text-align: center;">Consumo de Agua (m3)</td></tr>
+                <tr class="bg-black" style="font-weight: bold;"><td colspan="2" style="padding: 5px; text-align: center;">Consumo de Agua, Metros Cúbicos</td></tr>
                 <tr><td class="p-5 border-all">Lectura Anterior</td><td class="p-5 border-all text-right">{lectura_anterior:.0f}</td></tr>
-                <tr><td class="p-5 border-all">Lectura Actual</td><td class="p-5 border-all text-right">{lectura_actual:.0f}</td></tr>
+                <tr class="border-b-b"><td class="p-5 border-all">Lectura Actual</td><td class="p-5 border-all text-right">{lectura_actual:.0f}</td></tr>
                 <tr><td class="p-5 border-all">Consumo Dpto.</td><td class="p-5 border-all text-right">{own_consumption_m3:.2f}</td></tr>
-                <tr><td class="p-5 border-all">Consumo Común</td><td class="p-5 border-all text-right">{common_allocation_m3:.2f}</td></tr>
-                <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-5 border-all">Total, m3</td><td class="p-5 border-all text-right">{total_billing_m3:.2f}</td></tr>
+                <tr class="border-b-b"><td class="p-5 border-all">Consumo Común</td><td class="p-5 border-all text-right">{common_allocation_m3:.2f}</td></tr>
+                <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-5 border-all">Consumo Total, m3</td><td class="p-5 border-all text-right">{total_billing_m3:.2f}</td></tr>
             </table>
         </div>
         <div style="flex: 1;">
             <table class="border-all" style="font-size: 0.8em;">
-                <tr class="bg-gray" style="font-weight: bold;"><td colspan="2" style="padding: 5px; text-align: center;">DEUDA</td></tr>
+                <tr class="bg-black" style="font-weight: bold;"><td colspan="2" style="padding: 5px; text-align: center;">DEUDA</td></tr>
                 <tr><td class="p-5 border-all">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
                 <tr><td class="p-5 border-all">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
                 <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-5 border-all">Total Deuda</td><td class="p-5 border-all text-right">S/. 0.00</td></tr>
             </table>
         </div>
     </div>
-      <div style="display: flex; gap: 10px;">
+      <div class="border-all" style="display: block; gap: 10px; text-align: center;">
           <div class="bg-steel" style="color: white; font-weight: bold; font-size: 0.75em; padding: 4px 0;">
                         <div>MENSAJE IMPORTANTE</div>
          </div>
          <div>
-                       <div> CUENTA BANCARIA, BBVA Ahorros 0011-0132-0200474617<br>
+                       <div style="font-weight: bold; font-size: 0.75em;"> 
+                       CUENTA BANCARIA, BBVA Ahorros 0011-0132-0200474617<br>
                        CCI 011-132-00-0200474617-84 <br>
                        Cuenta a Nombre de Green World Marketing EIRL <br>
                        RUC 20509450812. <br>

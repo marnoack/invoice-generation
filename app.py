@@ -181,6 +181,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     table { width: 100%; border-collapse: collapse; margin-bottom: 0px !important;}
     .text-right { text-align: right; }
     .text-center { text-align: center; }
+    .p-1 { padding: 1px; }
     .p-5 { padding: 5px; }
     .p-8 { padding: 8px; }
     .border-b { border-bottom: 1px solid #ccc !important;; }
@@ -228,10 +229,10 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         <tr>
             <td style="width: 75%;">
                <div class="user-code-box-left" style="padding: 4px 4px">
-                  <p style="margin:0;"><strong>Departamento:</strong> {dept} | <strong>Periodo:</strong> {selected_period}</p>
-                  <p style="margin:0;"><strong>Propietario(s):</strong> {owner_list[0]}</p>
+                  <p style="margin:0;"><strong>Departamento:</strong><span style= text-align: right;"> {dept} | <strong>Periodo:</strong> {selected_period}</span></p>
+                  <p style="margin:0;"><strong>Propietario(s):</strong><span style= text-align: right;"> {owner_list[0]}</span></p>
                   {owners_html}
-                  <p style="margin:0;"><strong>Coeficiente de Participación:</strong> {coef*100:.2f}%</p>
+                  <p style="margin:0;"><strong>Coeficiente de Participación:</strong><span style= text-align: right;"> {coef*100:.2f}%</span></p>
                </div>
             </td>
             <td style="width: 25%; vertical-align: middle;">
@@ -261,21 +262,21 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         <div style="flex: 1;">
             <table class="border-all" style="font-size: 0.8em;">
                 <tr class="bg-black" style="font-weight: bold;"><td colspan="2" style="padding: 5px; text-align: center;">Consumo de Agua, Metros Cúbicos</td></tr>
-                <tr><td class="p-5 border-all">Lectura Anterior</td><td class="p-5 border-all text-right">{lectura_anterior:.0f}</td></tr>
-                <tr><td class="p-5 border-b-black border-all">Lectura Actual</td><td class="p-5  border-b-black border-all text-right">{lectura_actual:.0f}</td></tr>
-                <tr><td class="p-5 border-all ">Consumo Dpto.</td><td class="p-5 border-all text-right">{own_consumption_m3:.2f}</td></tr>
-                <tr><td class="p-5 border-all border-b-black">Consumo Común</td><td class="p-5 border-all border-b-black text-right">{common_allocation_m3:.2f}</td></tr>
-                <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-5 border-all">Consumo Total, m3</td><td class="p-5 border-all text-right">{total_billing_m3:.2f}</td></tr>
+                <tr><td class="p-1 border-all">Lectura Anterior</td><td class="p-1 border-all text-right">{lectura_anterior:.0f}</td></tr>
+                <tr><td class="p-1 border-b-black border-all">Lectura Actual</td><td class="p-1 border-b-black border-all text-right">{lectura_actual:.0f}</td></tr>
+                <tr><td class="p-1 border-all ">Consumo Dpto.</td><td class="p-1 border-all text-right">{own_consumption_m3:.2f}</td></tr>
+                <tr><td class="p-1 border-all border-b-black">Consumo Común</td><td class="p-1 border-all border-b-black text-right">{common_allocation_m3:.2f}</td></tr>
+                <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-1 border-all">Consumo Total, m3</td><td class="p-1 border-all text-right">{total_billing_m3:.2f}</td></tr>
             </table>
         </div>
         <div style="flex: 1;">
             <table class="border-all" style="font-size: 0.8em;">
                 <tr class="bg-black" style="font-weight: bold;"><td colspan="2" style="padding: 5px; text-align: center;">DEUDA</td></tr>
-                <tr><td class="p-5 border-b-gray">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
-                <tr><td class="p-5 border-b-gray">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
-                <tr><td class="p-5 border-b-gray">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
-                <tr><td class="p-5 border-b-grayl">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
-                <tr class="bg-steel" style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-5 border-all">TOTAL DEUDA</td><td class="p-5 border-all text-right">S/. 0.00</td></tr>
+                <tr><td class="p-1 border-b-gray">&nbsp;</td><td class="p-1 border-all text-right">&nbsp;</td></tr>
+                <tr><td class="p-1 border-b-gray">&nbsp;</td><td class="p-1 border-all text-right">&nbsp;</td></tr>
+                <tr><td class="p-1 border-b-gray">&nbsp;</td><td class="p-1 border-all text-right">&nbsp;</td></tr>
+                <tr><td class="p-1 border-b-grayl">&nbsp;</td><td class="p-1 border-all text-right">&nbsp;</td></tr>
+                <tr class="bg-steel" style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-1 border-all">TOTAL DEUDA</td><td class="p-1 border-all text-right">S/. 0.00</td></tr>
             </table>
         </div>
     </div>

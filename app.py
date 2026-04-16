@@ -244,7 +244,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
             </td>
         </tr>
     </table>
-    <div>
+    <div class="user-code-box-left">
     <table style="font-size: 0.9em;">
         <tr class="bg-black"><td class="border-tb-white">PRESUPUESTO TOTAL DEL MES:</td><td class="border-tb-white" text-right p-5">S/. {monthly_budget:.2f}</td></tr>
         <tr class="bg-black"><td class="border-tb-white" colspan="2">CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</td></tr>

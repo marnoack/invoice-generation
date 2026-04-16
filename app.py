@@ -272,6 +272,18 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
             </table>
         </div>
     </div>
+      <div style="display: flex; gap: 10px;">
+          <div class="bg-steel" style="color: white; font-weight: bold; font-size: 0.75em; padding: 4px 0;">
+                        <div>MENSAJE IMPORTANTE</div>
+         </div>
+         <div>
+                       <div> CUENTA BANCARIA, BBVA Ahorros 0011-0132-0200474617<br>
+                       CCI 011-132-00-0200474617-84 <br>
+                       Cuenta a Nombre de Green World Marketing EIRL <br>
+                       RUC 20509450812. <br>
+                       Envíe voucher a floresta255@gwm.pe </div>
+         </div>
+      </div>
 </div>
 """
     # --- LÓGICA DE DATOS PARA CSV ---

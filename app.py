@@ -180,7 +180,7 @@ def calculate_extraordinary_fee(selected_period, dept_coef, df_extra):
 
      
 # Reusable receipt template logic
-def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIENTS, OWNERS, BUDGETS, df_extra)):
+def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIENTS, OWNERS, BUDGETS, df_extra):
     dept = str(row['Dpto'])
     own_consumption_m3 = float(row['Consumo']) / 100.0
     lectura_anterior = float(row['Lectura Anterior']) / 100.0

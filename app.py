@@ -76,7 +76,16 @@ def load_sedapal_info():
     except Exception as e:
         st.sidebar.error(f"Error cargando Sedapal: {e}")
     return {}
-    
+
+@st.cache_data(ttl=300)
+def load_extra_info():
+    try:
+        # Aquí es donde ocurre la magia: apuntamos al nombre exacto de la pestaña
+        return conn.read(worksheet="Cuota-Extraordinaria", ttl="0")
+    except Exception as e:
+        st.error(f"No se pudo cargar la pestaña Cuota-Extraordinaria: {e}")
+        return None
+        
 def load_data():
     try:
         df = conn.read(worksheet="Consumos", ttl="0")
@@ -113,15 +122,73 @@ def get_sorted_periods(df_column):
         return (0, 0)
 
     return sorted(unique_periods, key=sort_key, reverse=True)
+    
+ def calculate_extraordinary_fee(selected_period, dept_coef, df_extra):
+    """
+    Busca en toda la hoja la cuota que coincida con el periodo seleccionado,
+    sin importar el orden de las filas.
+    """
+    if df_extra is None or df_extra.empty:
+        return 0.0, ""
 
+    try:
+        # 1. Convertir el periodo seleccionado (ej. "ABR 2026") a fecha comparable
+        MONTH_MAP = {"ENE": 1, "FEB": 2, "MAR": 3, "ABR": 4, "MAY": 5, "JUN": 6,
+                     "JUL": 7, "AGO": 8, "SET": 9, "OCT": 10, "NOV": 11, "DIC": 12}
+        parts = selected_period.split()
+        curr_year = int(parts[1])
+        curr_month = MONTH_MAP.get(parts[0].upper(), 1)
+        # Fecha del periodo seleccionado (normalizada al día 1)
+        target_date = datetime(curr_year, curr_month, 1)
+
+        # 2. Asegurar que las columnas de fecha sean tipo datetime
+        df_extra['Fecha Inicio'] = pd.to_datetime(df_extra['Fecha Inicio'])
+        df_extra['Fecha Fin'] = pd.to_datetime(df_extra['Fecha Fin'])
+
+        # 3. Filtrar las filas donde el periodo seleccionado esté dentro del rango
+        # Comparamos año y mes únicamente para evitar errores por días
+        mask = (
+            (df_extra['Fecha Inicio'].dt.year < curr_year) | 
+            ((df_extra['Fecha Inicio'].dt.year == curr_year) & (df_extra['Fecha Inicio'].dt.month <= curr_month))
+        ) & (
+            (df_extra['Fecha Fin'].dt.year > curr_year) | 
+            ((df_extra['Fecha Fin'].dt.year == curr_year) & (df_extra['Fecha Fin'].dt.month >= curr_month))
+        )
+
+        valid_fees = df_extra[mask]
+
+        if not valid_fees.empty:
+            # Si hay varias (poco probable, pero posible), tomamos la última modificada
+            row = valid_fees.iloc[-1]
+            
+            f_inicio = row['Fecha Inicio']
+            f_fin = row['Fecha Fin']
+            total_monto = float(row['Total'])
+            desc = str(row['Descripcion'])
+
+            # Calcular duración total en meses
+            num_months = (f_fin.year - f_inicio.year) * 12 + (f_fin.month - f_inicio.month) + 1
+            
+            # Cuota prorrateada
+            fee = (total_monto / num_months) * dept_coef
+            return fee, desc
+
+    except Exception as e:
+        st.error(f"Error procesando Cuota Extraordinaria: {e}")
+    
+    return 0.0, ""
+
+     
 # Reusable receipt template logic
-def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIENTS, OWNERS, BUDGETS):
+def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIENTS, OWNERS, BUDGETS, df_extra)):
     dept = str(row['Dpto'])
     own_consumption_m3 = float(row['Consumo']) / 100.0
     lectura_anterior = float(row['Lectura Anterior']) / 100.0
     lectura_actual = float(row['Lectura Actual'])  / 100.0
 
-    coef = COEFFICIENTS.get(dept, 0.05)
+    coef = COEFFICIENTS.get(dept, 0.0)
+    #coef = COEFFICIENTS.get(dept, 0.05)
+
     owner_list = OWNERS.get(dept, ["N/A"])
     common_allocation_m3 = common_area_consumption * coef
     
@@ -148,6 +215,9 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
 
     subtotal_neto = variable_cost + individual_fixed_fee
     tax_amount = subtotal_neto * TAX_RATE
+
+    # Cuota Extraordinaria
+    cuota_extraordinaria, extra_desc = calculate_extraordinary_fee(selected_period, coef, df_extra)
     
     #total_to_pay = subtotal_neto + tax_amount + maintenance_fee
     total_to_pay =  common_cost_with_tax+ own_cost_with_tax + maintenance_fee
@@ -253,6 +323,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         <tr><td class="p-5 border-b">Cuota de mantenimiento:</td><td class="text-right p-5 border-b">S/. {maintenance_fee:.2f}</td></tr>
         <tr><td class="p-5 border-b">Cuota de Consumo de Agua Propio:</td><td class="text-right p-5 border-b">S/. {own_cost_with_tax:.2f}</td></tr>
         <tr><td class="p-5 border-b">Cuota Áreas Comunes y Fijo (inc. IGV):</td><td class="text-right p-5 border-b">S/. {common_cost_with_tax:.2f}</td></tr>
+        <tr><td class="p-5 border-b">Cuota Extraordinaria:</td><td class="text-right p-5 border-b">S/. {cuota_extraordinaria:.2f}</td></tr>
     </table>
     <table style="font-size: 0.9em;">
         <tr class="bg-steel" style="font-weight: bold;"><td class="p-8">CUOTA TOTAL DE MES:</td><td class="text-right p-8">S/. {total_to_pay:.2f}</td></tr>
@@ -330,6 +401,9 @@ df = load_data()
 COEFFICIENTS, OWNERS = load_db_info()
 BUDGETS = load_budget_info()
 SEDAPAL_READINGS = load_sedapal_info()
+
+#Cuotas extraordinarias
+df_extra = load_extra_info()
 
 if not df.empty:
     periods = get_sorted_periods(df['Mes'])

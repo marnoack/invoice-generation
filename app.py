@@ -183,7 +183,8 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     .text-center { text-align: center; }
     .p-5 { padding: 5px; }
     .p-8 { padding: 8px; }
-    .border-b { border-bottom: 1px solid #eee; }
+    .border-b { border-bottom: 1px solid #ccc !important;; }
+    .border-b-gray { border-bottom: 1px solid #eee; }
     .border-b-black { border-bottom: 1px solid #000 !important; }
     .border-tb-white { border-bottom: 1px solid #FFF !important; border-top: 1px solid #FFF !important; }
     .border-tb-black { border-bottom: 1px solid #000 !important; border-top: 1px solid #000 !important; }
@@ -270,9 +271,11 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         <div style="flex: 1;">
             <table class="border-all" style="font-size: 0.8em;">
                 <tr class="bg-black" style="font-weight: bold;"><td colspan="2" style="padding: 5px; text-align: center;">DEUDA</td></tr>
-                <tr><td class="p-5 border-all">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
-                <tr><td class="p-5 border-all">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
-                <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-5 border-all">Total Deuda</td><td class="p-5 border-all text-right">S/. 0.00</td></tr>
+                <tr><td class="p-5 border-b-gray">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
+                <tr><td class="p-5 border-b-gray">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
+                <tr><td class="p-5 border-b-gray">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
+                <tr><td class="p-5 border-b-grayl">&nbsp;</td><td class="p-5 border-all text-right">&nbsp;</td></tr>
+                <tr class="bg-steel" style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-5 border-all">TOTAL DEUDA</td><td class="p-5 border-all text-right">S/. 0.00</td></tr>
             </table>
         </div>
     </div>

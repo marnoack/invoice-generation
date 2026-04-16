@@ -178,7 +178,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     .bg-steel { background-color: #244163 !important; color: white !important; }
     .bg-yellow { background-color: #ffb300 !important; color: black !important; }
     .bg-gray { background-color: #f2f2f2 !important; }
-    table { width: 100%; border-collapse: collapse; margin-bottom: 0px; !important}
+    table { width: 100%; border-collapse: collapse; margin-bottom: 0px !important;}
     .text-right { text-align: right; }
     .text-center { text-align: center; }
     .p-5 { padding: 5px; }

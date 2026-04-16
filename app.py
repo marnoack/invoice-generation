@@ -450,7 +450,7 @@ if not df.empty:
         styles = ""
         
         for _, row in df_period.iterrows():
-            styles, body, total, c_row = get_receipt_content(row, selected_period, common_area_consumption, COEFFICIENTS, OWNERS, BUDGETS)
+            styles, body, total, c_row = get_receipt_content(row, selected_period, common_area_consumption, COEFFICIENTS, OWNERS, BUDGETS, df_extra)
             batch_results.append({"Dpto": row['Dpto'], "Total a Pagar": f"S/. {total:.2f}"})
             full_html_content += body
             csv_rows.append(c_row)

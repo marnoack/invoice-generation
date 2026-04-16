@@ -191,7 +191,8 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     .invoice-info { font-size: 0.85em; color: #333; line-height: 1.2; }
     .logo-img { max-height: 80px; width: auto; }
     .info-table td { vertical-align: top; padding: 2px 0; }
-    .user-code-box { border: 1px solid #333; text-align: center; overflow: hidden; }
+    .user-code-box { border: 1px solid #333; text-align: center; overflow: hidden; border-radius: 5px;}
+    .user-code-box-left { border: 1px solid #333; text-align: left; overflow: hidden; border-radius: 5px;}
     @media print {
         body { margin: 0; padding: 0; }
         .receipt-container { border: none !important; width: 100%; max-width: 100%; page-break-after: always; padding: 10px;}
@@ -225,7 +226,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     <table class="info-table" style="width: 100%; font-size: 0.9em; border-collapse: collapse;">
         <tr>
             <td style="width: 75%;">
-               <div class="user-code-box">
+               <div class="user-code-box-left">
                   <p style="margin:0;"><strong>Departamento:</strong> {dept} | <strong>Periodo:</strong> {selected_period}</p>
                   <p style="margin:0;"><strong>Propietario(s):</strong> {owner_list[0]}</p>
                   {owners_html}

@@ -229,10 +229,10 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         <tr>
             <td style="width: 75%;">
                <div class="user-code-box-left" style="padding: 4px 4px">
-                  <p style="margin:0;"><strong>Departamento:</strong><span style= text-align: right;"> {dept} | <strong>Periodo:</strong> {selected_period}</span></p>
-                  <p style="margin:0;"><strong>Propietario(s):</strong><span style= text-align: right;"> {owner_list[0]}</span></p>
+                  <p style="margin:0;"><strong>Departamento:</strong><span style="text-align: right;"> {dept} | <strong>Periodo:</strong> {selected_period}</span></p>
+                  <p style="margin:0;"><strong>Propietario(s):</strong><span style="text-align: right;"> {owner_list[0]}</span></p>
                   {owners_html}
-                  <p style="margin:0;"><strong>Coeficiente de Participación:</strong><span style= text-align: right;"> {coef*100:.2f}%</span></p>
+                  <p style="margin:0;"><strong>Coeficiente de Participación:</strong><span style="text-align: right;"> {coef*100:.2f}%</span></p>
                </div>
             </td>
             <td style="width: 25%; vertical-align: middle;">

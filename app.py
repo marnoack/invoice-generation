@@ -277,8 +277,8 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
         </div>
     </div>
     </div>
-      <div class="border-all" style="display: block; gap: 10px; text-align: center;">
-          <div class="bg-steel" style="color: white; font-weight: bold; font-size: 0.75em; padding: 4px 0;">
+      <div style="margin-top:10px">
+          <div class="bg-steel user-code-box" style="color: white; font-weight: bold; font-size: 0.75em; padding: 4px 0;">
                         <div>MENSAJE IMPORTANTE</div>
          </div>
          <div>

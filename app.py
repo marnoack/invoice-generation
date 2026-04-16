@@ -226,7 +226,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     <table class="info-table" style="width: 100%; font-size: 0.9em; border-collapse: collapse;">
         <tr>
             <td style="width: 75%;">
-               <div class="user-code-box-left">
+               <div class="user-code-box-left" style="padding: 4px 4px">
                   <p style="margin:0;"><strong>Departamento:</strong> {dept} | <strong>Periodo:</strong> {selected_period}</p>
                   <p style="margin:0;"><strong>Propietario(s):</strong> {owner_list[0]}</p>
                   {owners_html}
@@ -244,6 +244,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
             </td>
         </tr>
     </table>
+    <div>
     <table style="font-size: 0.9em;">
         <tr class="bg-black"><td class="border-tb-white">PRESUPUESTO TOTAL DEL MES:</td><td class="border-tb-white" text-right p-5">S/. {monthly_budget:.2f}</td></tr>
         <tr class="bg-black"><td class="border-tb-white" colspan="2">CONCEPTOS DE SU CUOTA DEL MES DE {selected_period}</td></tr>
@@ -274,6 +275,7 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
                 <tr style="font-weight: bold; background-color: #f9f9f9 !important;"><td class="p-5 border-all">Total Deuda</td><td class="p-5 border-all text-right">S/. 0.00</td></tr>
             </table>
         </div>
+    </div>
     </div>
       <div class="border-all" style="display: block; gap: 10px; text-align: center;">
           <div class="bg-steel" style="color: white; font-weight: bold; font-size: 0.75em; padding: 4px 0;">

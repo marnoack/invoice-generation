@@ -3,3 +3,4 @@ pandas
 pillow
 st-gsheets-connection
 requests
+weasyprint

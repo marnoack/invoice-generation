@@ -3,6 +3,8 @@ from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 from datetime import datetime, timedelta
 import io
+import zipfile
+from weasyprint import HTML
 
 # --- DATE CALCULATION ---
 current_date = datetime.now()
@@ -100,20 +102,20 @@ def load_data():
 def calculate_variable_cost(consumption):
     return (consumption * WATER_RATE) + (consumption * SEWAGE_RATE)
 
+MONTH_MAP = {
+    "Ene": 1, "Feb": 2, "Mar": 3, "Abr": 4, "May": 5, "Jun": 6,
+    "Jul": 7, "Ago": 8, "Set": 9, "Oct": 10, "Nov": 11, "Dic": 12
+}
 def get_sorted_periods(df_column):
     """Sorts periods by year desc and month desc using Spanish abbreviations."""
-    MONTH_MAP = {
-        "ENE": 1, "FEB": 2, "MAR": 3, "ABR": 4, "MAY": 5, "JUN": 6,
-        "JUL": 7, "AGO": 8, "SET": 9, "OCT": 10, "NOV": 11, "DIC": 12
-    }
-    
+
     unique_periods = df_column.unique()
     
     def sort_key(period_str):
         try:
             parts = str(period_str).split()
             if len(parts) == 2:
-                month_name = parts[0].upper()
+                month_name = parts[0].capitalize()
                 year = int(parts[1])
                 month_num = MONTH_MAP.get(month_name, 0)
                 return (year, month_num)
@@ -122,6 +124,34 @@ def get_sorted_periods(df_column):
         return (0, 0)
 
     return sorted(unique_periods, key=sort_key, reverse=True)
+
+SPANISH_MONTHS = {
+    1: "Ene", 2: "Feb", 3: "Mar", 4: "Abr", 5: "May", 6: "Jun",
+    7: "Jul", 8: "Ago", 9: "Set", 10: "Oct", 11: "Nov", 12: "Dic"
+}
+
+def parse_period(period_str):
+    """Returns (year, month) from a 'Mes Año' string, reusing the same MONTH_MAP convention."""
+    try:
+        parts = str(period_str).strip().split()
+        if len(parts) == 2:
+            month_num = MONTH_MAP.get(parts[0].capitalize())
+            year = int(parts[1])
+            if month_num:
+                return (year, month_num)
+    except (ValueError, IndexError):
+        pass
+    return None
+
+def get_next_period_label(all_periods):
+    """Given a collection of period strings, returns the label for the month after the latest one."""
+    parsed = [parse_period(p) for p in all_periods]
+    parsed = [p for p in parsed if p is not None]
+    if not parsed:
+        return None
+    year, month = max(parsed)
+    next_year, next_month = (year + 1, 1) if month == 12 else (year, month + 1)
+    return f"{SPANISH_MONTHS[next_month]} {next_year}"
     
 def calculate_extraordinary_fee(selected_period, dept_coef, df_extra):
     """
@@ -396,6 +426,25 @@ def get_receipt_content(row, selected_period, common_area_consumption, COEFFICIE
     
     return receipt_styles, receipt_body, total_to_pay, csv_data
     
+def html_to_pdf_bytes(html_string):
+    """Converts an HTML string into PDF bytes using WeasyPrint —
+    much stronger CSS support than xhtml2pdf, including flexbox and border-radius."""
+    try:
+        return HTML(string=html_string).write_pdf()
+    except Exception:
+        return None
+
+
+def wrap_for_pdf(styles, body):
+    pdf_page_css = """
+<style>
+@page { size: A4; margin: 2.5cm; }
+.receipt-container { max-width: 100% !important; margin: 0 !important; }
+</style>
+"""
+    return styles + pdf_page_css + body
+
+
 # --- MAIN LOGIC ---
 df = load_data()
 COEFFICIENTS, OWNERS = load_db_info()
@@ -408,6 +457,65 @@ df_extra = load_extra_info()
 if not df.empty:
     periods = get_sorted_periods(df['Mes'])
     selected_period = st.selectbox("Periodo (Mes Año)", periods)
+
+    col_a, col_b = st.columns(2)
+    with col_a:
+        budget_val = BUDGETS.get(selected_period)
+        if budget_val is not None:
+            st.metric("Presupuesto del Mes", f"S/. {budget_val:.2f}")
+        else:
+            st.metric("Presupuesto del Mes", "No registrado")
+    with col_b:
+        sedapal_row = SEDAPAL_READINGS.get(selected_period, {})
+        total_m3 = sedapal_row.get('total_m3')
+        if total_m3:
+            st.metric("Lectura Medidor General (Sedapal)", f"{total_m3:.2f} m³")
+        else:
+            st.metric("Lectura Medidor General (Sedapal)", "No registrada")
+
+    with st.expander("➕ Agregar Nuevo Periodo"):
+        consumos_periods = set(df['Mes'].unique())
+        parsed_consumos = [parse_period(p) for p in consumos_periods]
+        parsed_consumos = [p for p in parsed_consumos if p is not None]
+        if parsed_consumos:
+            latest_year, latest_month = max(parsed_consumos)
+            next_period_label = f"{SPANISH_MONTHS[latest_month]} {latest_year}"
+        else:
+            next_period_label = None
+        if next_period_label is None:
+            st.warning("No se pudo determinar el último periodo registrado.")
+        else:
+            already_exists = next_period_label in BUDGETS and next_period_label in SEDAPAL_READINGS
+            st.write(f"**Próximo periodo disponible:** {next_period_label}")
+            if already_exists:
+                st.info(f"El periodo {next_period_label} ya tiene Presupuesto y Sedapal registrados.")
+            else:
+                new_presupuesto = st.number_input("Presupuesto (S/.)", min_value=0.0, step=0.01, key="np_presupuesto")
+                new_total_m3 = st.number_input("Sedapal - Total m3", min_value=0.0, step=0.01, key="np_total_m3")
+                new_water_rate = st.number_input("Agua Costo/m3 S/.", min_value=0.0, step=0.0001, value=2.29, format="%.4f", key="np_water_rate")
+                new_sewage_rate = st.number_input("Alcantarillado Costo/m3 S/.", min_value=0.0, step=0.0001, value=1.43, format="%.4f", key="np_sewage_rate")
+                new_fixed_fee = st.number_input("Cargo Fijo", min_value=0.0, step=0.01, value=6.30, key="np_fixed_fee")
+                if st.button(f"➕ Crear Periodo {next_period_label}", key="btn_create_period"):
+                    try:
+                        if next_period_label not in BUDGETS:
+                            df_budget_full = conn.read(worksheet="Presupuesto", ttl="0")
+                            new_row = pd.DataFrame([{"Mes": next_period_label, "Total": new_presupuesto}])
+                            conn.update(worksheet="Presupuesto", data=pd.concat([df_budget_full, new_row], ignore_index=True))
+                        if next_period_label not in SEDAPAL_READINGS:
+                            df_sedapal_full = conn.read(worksheet="Sedapal", ttl="0")
+                            new_row = pd.DataFrame([{
+                                "Mes": next_period_label,
+                                "Total m3": new_total_m3,
+                                "Agua Costo/m3 S/.": new_water_rate,
+                                "Alcantarillado costo/m3 S/.": new_sewage_rate,
+                                "Cargo Fijo": new_fixed_fee
+                            }])
+                            conn.update(worksheet="Sedapal", data=pd.concat([df_sedapal_full, new_row], ignore_index=True))
+                        st.cache_data.clear()
+                        st.success(f"Periodo {next_period_label} creado con Presupuesto y Sedapal.")
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"Error al crear el nuevo periodo: {e}")
 
     # --- UPDATE GLOBAL RATES BASED ON SELECTED PERIOD ---
     period_data = SEDAPAL_READINGS.get(selected_period, {})
@@ -438,7 +546,7 @@ if not df.empty:
         c1.metric("Consumo General", f"{main_meter_reading:.2f} m³")
         c2.metric("Suma Departamentos", f"{total_apartments_consumption:.2f} m³")
         c3.metric("Áreas Comunes", f"{common_area_consumption:.2f} m³")
-        st.dataframe(df_period, use_container_width=True)
+        st.dataframe(df_period, width='stretch')
         
     elif selected_dept == "🚀 GENERAR TODO EL EDIFICIO (BATCH)":
         st.divider()
@@ -456,26 +564,38 @@ if not df.empty:
             csv_rows.append(c_row)
 
         st.table(pd.DataFrame(batch_results))
-
+        
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("🖨️ Imprimir Todos los Recibos"):
-                escaped_full_body = (styles + full_html_content).replace("`", "\\`").replace("${", "\\${")
-                st.components.v1.html(f"""
-                    <script>
-                    const win = window.open('', '', 'height=700,width=900');
-                    win.document.write('<html><head><title>Recibos Edificio {selected_period}</title>');
-                    win.document.write('</head><body>');
-                    win.document.write(`{escaped_full_body}`);
-                    win.document.write('</body></html>');
-                    win.document.close();
-                    win.setTimeout(function() {{
-                        win.focus();
-                        win.print();
-                        win.close();
-                    }}, 1000);
-                    </script>
-                """, height=0)    
+            if st.button("📦 Generar PDFs Individuales (ZIP)"):
+                with st.spinner(f"Generando {len(csv_rows)} recibos en PDF, un momento..."):
+                    zip_buffer = io.BytesIO()
+                    errors = []
+                    with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zip_file:
+                        for c_row in csv_rows:
+                            dpto = c_row["Dpto"]
+                            row_data = df_period[df_period['Dpto'] == dpto].iloc[0]
+                            styles_i, body_i, _, _ = get_receipt_content(
+                                row_data, selected_period, common_area_consumption,
+                                COEFFICIENTS, OWNERS, BUDGETS, df_extra
+                            )
+                            #pdf_bytes = html_to_pdf_bytes(styles_i + body_i)
+                            pdf_bytes = html_to_pdf_bytes(wrap_for_pdf(styles_i, body_i))
+                            if pdf_bytes:
+                                zip_file.writestr(f"recibo_{dpto}.pdf", pdf_bytes)
+                            else:
+                                errors.append(dpto)
+                    zip_buffer.seek(0)
+
+                if errors:
+                    st.warning(f"No se pudieron generar los recibos de: {', '.join(errors)}")
+
+                st.download_button(
+                    label="⬇️ Descargar ZIP con Todos los Recibos",
+                    data=zip_buffer,
+                    file_name=f"Recibos_{selected_period.replace(' ', '_')}.zip",
+                    mime="application/zip"
+                )   
         with col2:
             report_df = pd.DataFrame(csv_rows)
             csv_buffer = io.StringIO()

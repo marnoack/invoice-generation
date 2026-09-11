@@ -88,16 +88,16 @@ def is_blocked_from_app(user_id, app_name):
 # --- 3. LOGIN / SIGNUP UI ---
 def render_login_ui():
     """Renders the login and signup forms. Returns True if logged in, False otherwise."""
-    st.title("🔐 Authentication Required")
-    st.write("Please sign in to access the system.")
+    st.title("🔐 Acceso Requerido")
+    st.write("Inicia sesión para acceder al sistema.")
 
-    tab_login, tab_signup = st.tabs(["🔑 Log In", "📝 Create Account"])
+    tab_login, tab_signup = st.tabs(["🔑 Iniciar Sesión", "📝 Crear Cuenta"])
 
     with tab_login:
         with st.form("login_form"):
-            email = st.text_input("Email", placeholder="user@example.com")
-            password = st.text_input("Password", type="password")
-            submit_login = st.form_submit_button("Log In", use_container_width=True)
+            email = st.text_input("Correo Electrónico", placeholder="usuario@ejemplo.com")
+            password = st.text_input("Contraseña", type="password")
+            submit_login = st.form_submit_button("Iniciar Sesión", use_container_width=True)
             if submit_login:
                 if email and password:
                     login(email, password)
@@ -106,10 +106,10 @@ def render_login_ui():
 
     with tab_signup:
         with st.form("signup_form"):
-            new_email = st.text_input("Email", placeholder="newuser@example.com")
-            new_password = st.text_input("Password", type="password", help="Must be at least 6 characters")
-            confirm_password = st.text_input("Confirm Password", type="password")
-            submit_signup = st.form_submit_button("Sign Up", use_container_width=True)
+            new_email = st.text_input("Correo Electrónico", placeholder="nuevo@ejemplo.com")
+            new_password = st.text_input("Contraseña", type="password", help="Mínimo 8 caracteres, con mayúscula, minúscula y número")
+            confirm_password = st.text_input("Confirmar Contraseña", type="password")
+            submit_signup = st.form_submit_button("Crear Cuenta", use_container_width=True)
             if submit_signup:
                 if not new_email or not new_password:
                     st.warning("Please fill out all fields.")

@@ -42,28 +42,28 @@ def login(email, password):
     try:
         response = supabase.auth.sign_in_with_password({"email": email, "password": password})
         st.session_state.user = response.user
-        st.toast("Welcome back!", icon="👋")
+        st.toast("¡Bienvenido de nuevo!", icon="👋")
         st.rerun()
     except Exception as e:
-        st.error(f"Login failed: {e}")
+        st.error(f"No se pudo iniciar sesión. Detalle: {e}")
 
 def signup(email, password):
     supabase = get_supabase()
     try:
         response = supabase.auth.sign_up({"email": email, "password": password})
-        st.success("Account created successfully! Check your email for verification (if required), or log in.")
+        st.success("¡Cuenta creada exitosamente! Revisa tu correo para verificarla (si es necesario), o inicia sesión.")
     except Exception as e:
-        st.error(f"Sign-up failed: {e}")
+        st.error(f"No se pudo crear la cuenta. Detalle: {e}")
 
 def logout():
     supabase = get_supabase()
     try:
         supabase.auth.sign_out()
         st.session_state.user = None
-        st.toast("Logged out successfully.")
+        st.toast("Sesión cerrada correctamente.")
         st.rerun()
     except Exception as e:
-        st.error(f"Logout failed: {e}")
+        st.error(f"No se pudo cerrar sesión. Detalle: {e}")
 
 def is_blocked_from_app(user_id, app_name):
     """Checks the app_blocks table for a row that blocks this user from this app."""
@@ -138,9 +138,9 @@ def require_auth(app_name: str):
     if is_blocked_from_app(st.session_state.user.id, app_name):
         st.error("🚫 Tu acceso a esta aplicación ha sido deshabilitado. Contacta al administrador.")
         with st.sidebar:
-            st.write("👤 **Logged in as:**")
+            st.write("👤 **Sesión iniciada como:**")
             st.caption(st.session_state.user.email)
-            if st.button("🚪 Log Out", use_container_width=True):
+            if st.button("🚪 Cerrar Sesión", use_container_width=True):
                 logout()
         st.stop()
 

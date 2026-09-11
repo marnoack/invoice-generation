@@ -148,7 +148,7 @@ def require_auth(app_name: str):
     with st.sidebar:
         st.write("👤 **Logged in as:**")
         st.caption(st.session_state.user.email)
-        if st.button("🚪 Log Out", use_container_width=True):
+        if st.button("🚪 Cerrar Sesión", use_container_width=True):
             logout()
         st.divider()
 

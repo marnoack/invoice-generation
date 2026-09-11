@@ -4,3 +4,4 @@ pillow
 st-gsheets-connection
 requests
 weasyprint
+supabase

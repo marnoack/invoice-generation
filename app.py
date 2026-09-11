@@ -5,6 +5,9 @@ from datetime import datetime, timedelta
 import io
 import zipfile
 from weasyprint import HTML
+from auth import require_auth
+
+user = require_auth("invoice_generation")
 
 # --- DATE CALCULATION ---
 current_date = datetime.now()
